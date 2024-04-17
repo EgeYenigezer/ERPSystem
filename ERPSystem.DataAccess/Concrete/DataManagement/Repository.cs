@@ -64,10 +64,9 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
             return await query.SingleOrDefaultAsync(Filter);
         }
 
-        public async Task RemoveAsync(int Entity)
+        public async Task RemoveAsync(T Entity)
         {
-            var a = await _dbSet.FindAsync(Entity);
-            await Task.Run(() => _dbSet.Remove(a));
+            await Task.Run(() => _dbSet.Remove(Entity));
         }
 
         public async Task UpdateAsync(T Entity)
