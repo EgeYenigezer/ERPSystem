@@ -1,4 +1,5 @@
-﻿using ERPSystem.Entity.Entities;
+﻿using ERPSystem.Entity.Base;
+using ERPSystem.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ERPSystem.Entity.DTO.UserDTO
 {
-    public class UserDTORequest
+    public class UserDTORequest:BaseRequestDTO
     {
         public Int64 Id { get; set; }
         public string Name { get; set; }

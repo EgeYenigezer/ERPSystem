@@ -1,4 +1,5 @@
 ﻿
+using ERPSystem.Entity.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ERPSystem.Entity.DTO.ProductDTO
 {
-    public class ProductDTOResponse
+    public class ProductDTOResponse:BaseResponseDTO
     {
         public Int64 Id { get; set; }
         public string Name { get; set; }
