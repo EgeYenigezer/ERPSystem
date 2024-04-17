@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ERPSystem.DataAccess\ERPSystem.DataAccess.csproj" />
-    <ProjectReference Include="..\ERPSystem.Entity\ERPSystem.Entity.csproj" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\" />
-    <Folder Include="Concrete\" />
+    <ProjectReference Include="..\ERPSystem.DataAccess\ERPSystem.DataAccess.csproj" />
+    <ProjectReference Include="..\ERPSystem.Entity\ERPSystem.Entity.csproj" />
   </ItemGroup>
 
 </Project>
