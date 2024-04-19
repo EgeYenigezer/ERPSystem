@@ -59,7 +59,7 @@ namespace ERPSystem.Business.Concrete
         {
             var company = _mapper.Map<Company>(RequestEntity);
 
-            var dbCompany = await _uow.CompanyRepository.GetAllAsync(x=>x.Id==company.Id);
+            var dbCompany = await _uow.CompanyRepository.GetAsync(x=>x.Id==company.Id);
 
             CompanyDTOResponse companyDTOResponse = _mapper.Map<CompanyDTOResponse>(dbCompany);
 

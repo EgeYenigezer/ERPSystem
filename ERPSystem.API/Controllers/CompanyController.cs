@@ -24,13 +24,26 @@ namespace ERPSystem.API.Controllers
             return Ok(companies);
         }
 
-        [HttpPost("/AddCompany")]
-        public async Task<IActionResult> AddAsync(CompanyDTORequest companyDTORequest)
+        [HttpPost("/Company")]
+        public async Task<IActionResult> GetAsync(CompanyDTORequest companyDTORequest)
         {
-            var company = await _companyService.AddAsync(companyDTORequest);
+            var company = await _companyService.GetAsync(companyDTORequest);
             return Ok(company);
         }
 
 
+        [HttpPost("/AddCompany")]
+        public async Task<IActionResult> AddAsync(CompanyDTORequest companyDTORequest)
+        {
+            var company = await _companyService.AddAsync(companyDTORequest);
+            return Ok($"Yeni Bir Şirket Eklendi =>\n\r Name: {company.Name} Id: {company.Id}");
+        }
+
+        [HttpPost("/UpdateCompany")]
+        public async Task<IActionResult> UpdateAsync(CompanyDTORequest companyDTORequest)
+        {
+            await _companyService.UpdateAsync(companyDTORequest);
+            return Ok("İşlem Sanırım Başarılı!!");
+        }
     }
 }
