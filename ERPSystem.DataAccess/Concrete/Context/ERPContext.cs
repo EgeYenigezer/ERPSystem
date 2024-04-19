@@ -194,7 +194,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.HasOne(x => x.ProcessType).WithMany(x => x.StockDetails).HasForeignKey(x => x.ProcessTypeId).OnDelete(DeleteBehavior.NoAction);
 
-                entity.HasOne(x => x.Reciever).WithMany(x => x.RecieverStockDetails).HasForeignKey(x => x.RecieverId).OnDelete(DeleteBehavior.NoAction);
+                entity.HasOne(x => x.Receiver).WithMany(x => x.RecieverStockDetails).HasForeignKey(x => x.ReceiverId).OnDelete(DeleteBehavior.NoAction);
                 entity.HasOne(x => x.Deliverer).WithMany(x => x.DelivererStockDetails).HasForeignKey(x => x.DelivererId).OnDelete(DeleteBehavior.NoAction);
 
 
