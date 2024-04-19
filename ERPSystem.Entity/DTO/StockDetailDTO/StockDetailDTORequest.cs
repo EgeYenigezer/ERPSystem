@@ -14,7 +14,7 @@ namespace ERPSystem.Entity.DTO.StockDetailDTO
         public decimal Quantity { get; set; }
         public Int64 StockId { get; set; }
         public Int64 ProcessTypeId { get; set; }
-        public Int64 RecieverId { get; set; }
+        public Int64 ReceiverId { get; set; }
         public Int64 DelivererId { get; set; }
     }
 }
