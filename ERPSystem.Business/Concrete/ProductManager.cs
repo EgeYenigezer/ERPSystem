@@ -44,7 +44,7 @@ namespace ERPSystem.Business.Concrete
             if (RequestEntity.CategoryName!=null)
             {
                 var product = _mapper.Map<Product>(RequestEntity);
-                var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>x.CategoryName==product.CategoryName);
+                var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>true);
 
                 List<ProductDTOResponse> productDTOResponses = new();
 

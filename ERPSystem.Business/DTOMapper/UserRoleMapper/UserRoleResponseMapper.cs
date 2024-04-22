@@ -13,8 +13,13 @@ namespace ERPSystem.Business.DTOMapper.UserRoleMapper
     {
         public UserRoleResponseMapper()
         {
-            CreateMap<UserRole,UserRoleDTOResponse>();
-            CreateMap<UserRoleDTOResponse, UserRole>();
+            CreateMap<UserRole, UserRoleDTOResponse>().ForMember(dest => dest.UserName, opt =>
+            {
+                opt.MapFrom(src => src.User.Name);
+            }).ForMember(dest => dest.RoleName, opt =>
+            {
+                opt.MapFrom(src => src.Role.Name);
+            }).ReverseMap() ;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace ERPSystem.DataAccess.Abstract.DataManagement
         IUnitRepository UnitRepository { get; }
         IUserRepository UserRepository { get; }
         IUserRoleRepository UserRoleRepository { get; }
+        ICategoryRepository CategoryRepository { get; }
         Task<int> SaveChangeAsync();
 
     }

@@ -13,8 +13,10 @@ namespace ERPSystem.Business.DTOMapper.DepartmentMapper
     {
         public DepartmentResponseMapper()
         {
-            CreateMap<Department,DepartmentDTOResponse>();
-            CreateMap<DepartmentDTOResponse, Department>();
+            CreateMap<Department, DepartmentDTOResponse>().ForMember(dest => dest.CompanyName, opt =>
+            {
+                opt.MapFrom(src=>src.Company.Name);
+            }).ReverseMap();
         }
     }
 }

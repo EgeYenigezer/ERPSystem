@@ -34,6 +34,7 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
             ProcessTypeRepository = new EfProcessTypeRepository(_context);
             StatusRepository = new EfStatusRepository(_context);
             UnitRepository = new EfUnitRepository(_context);
+            CategoryRepository = new EfCategoryRepository(_context);
 
         }
 
@@ -63,6 +64,7 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
         public IStatusRepository StatusRepository { get; }
 
         public IUnitRepository UnitRepository { get; }
+        public ICategoryRepository CategoryRepository { get; }
 
         public Task<int> SaveChangeAsync()
         {
@@ -72,7 +74,7 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
                 {
                     item.Entity.AddedTime = DateTime.Now;
 
-                    if (item.Entity.IsActive == null)
+                    if (item.Entity.IsActive == false)
                     {
                         item.Entity.IsActive = true;
                     }

@@ -16,6 +16,5 @@ namespace ERPSystem.Entity.DTO.OfferDTO
         public decimal Price { get; set; }
         public string StatusName { get; set; }
         public string ApproverUserName { get; set; }
-        public string RequestName { get; set; }
     }
 }

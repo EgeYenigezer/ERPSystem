@@ -13,8 +13,10 @@ namespace ERPSystem.Business.DTOMapper.ProductMapper
     {
         public ProductResponseMapper()
         {
-            CreateMap<Product,ProductDTOResponse>();
-            CreateMap<ProductDTOResponse, Product>();
+            CreateMap<Product, ProductDTOResponse>().ForMember(dest => dest.CategoryName, opt =>
+            {
+                opt.MapFrom(src=>src.Category.Name);
+            }).ReverseMap();
         }
     }
 }

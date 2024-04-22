@@ -1,5 +1,6 @@
 ﻿using ERPSystem.Business.Abstract;
 using ERPSystem.DataAccess.Abstract;
+using ERPSystem.Entity.DTO.CategoryDTO;
 using ERPSystem.Entity.DTO.CompanyDTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,13 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> UpdateAsync(CompanyDTORequest companyDTORequest)
         {
             await _companyService.UpdateAsync(companyDTORequest);
+            return Ok("İşlem Sanırım Başarılı!!");
+        }
+
+        [HttpPost("/DeleteCompany")]
+        public async Task<IActionResult> DeleteAsync(CompanyDTORequest companyDTORequest)
+        {
+            await _companyService.DeleteAsync(companyDTORequest);
             return Ok("İşlem Sanırım Başarılı!!");
         }
     }

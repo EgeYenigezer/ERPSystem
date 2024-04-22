@@ -48,6 +48,15 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Name).HasMaxLength(50);
             });
+            modelBuilder.Entity<Company>(entity =>
+            {
+
+                entity.ToTable("Company");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.AddedTime).HasColumnType("datetime");
+                entity.Property(e => e.Name).HasMaxLength(50);
+            });
 
             modelBuilder.Entity<Department>(entity =>
             {
@@ -111,8 +120,9 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Name).HasMaxLength(50);
                 entity.Property(e => e.BrandName).HasMaxLength(50);
-                entity.Property(e => e.CategoryName).HasMaxLength(50);
                 entity.Property(e => e.Description).HasMaxLength(50);
+
+                entity.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x=>x.CategoryId).OnDelete(DeleteBehavior.NoAction);
 
             });
 
