@@ -8,6 +8,7 @@ using ERPSystem.Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,30 +47,15 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<InvoiceDTOResponse>> GetAllAsync(InvoiceDTORequest RequestEntity)
         {
-            if (RequestEntity.InvoiceDate!=null)
-            {
-                var invoice = _mapper.Map<Invoice>(RequestEntity);
+            List<InvoiceDTOResponse> invoiceDTOResponses = new();
 
-                var dbInvoices= await _uow.InvoiceRepository.GetAllAsync(x=>x.InvoiceDate==invoice.InvoiceDate);
-
-                List<InvoiceDTOResponse> invoiceDTOResponses = new();
-
-                foreach(var item in dbInvoices)
-                {
-                    invoiceDTOResponses.Add(_mapper.Map<InvoiceDTOResponse>(item));
-
-                }
-
-                return invoiceDTOResponses;
-            }
-
-            else if (RequestEntity.ProductName!=null)
+             if (!(RequestEntity.ProductName.Contains("string")))
             {
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
 
                 var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.ProductName == invoice.ProductName);
 
-                List<InvoiceDTOResponse> invoiceDTOResponses = new();
+                
 
                 foreach (var item in dbInvoices)
                 {
@@ -77,17 +63,17 @@ namespace ERPSystem.Business.Concrete
 
                 }
 
-                return invoiceDTOResponses;
+                
 
             }
-            else if (RequestEntity.CompanyName!=null)
+             if (!(RequestEntity.CompanyName.Contains("string")))
             {
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
 
                 var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.CompanyName == invoice.CompanyName);
 
-                List<InvoiceDTOResponse> invoiceDTOResponses = new();
+                
 
                 foreach (var item in dbInvoices)
                 {
@@ -95,16 +81,16 @@ namespace ERPSystem.Business.Concrete
 
                 }
 
-                return invoiceDTOResponses;
+                
             }
-            else if (RequestEntity.SupplierName!=null)
+             if (!(RequestEntity.SupplierName.Contains("string")))
             {
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
 
                 var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.SupplierName == invoice.SupplierName);
 
-                List<InvoiceDTOResponse> invoiceDTOResponses = new();
+               
 
                 foreach (var item in dbInvoices)
                 {
@@ -112,23 +98,44 @@ namespace ERPSystem.Business.Concrete
 
                 }
 
-                return invoiceDTOResponses;
+                
+
             }
             else
             {
                 var dbInvoices = await _uow.InvoiceRepository.GetAllAsync();
 
-                List<InvoiceDTOResponse> invoiceDTOResponses = new();
+                
 
                 foreach (var item in dbInvoices)
                 {
                     invoiceDTOResponses.Add(_mapper.Map<InvoiceDTOResponse>(item));
 
                 }
-                return invoiceDTOResponses;
+                
+            }
+            return invoiceDTOResponses;
+
+
+        }
+
+        public async Task<IEnumerable<InvoiceDTOResponse>> GetAllAsyncByDate(string date)
+        {
+            string[] dates = date.Split('-');
+            DateTime startDate = Convert.ToDateTime(dates[0]);
+            DateTime endDate = Convert.ToDateTime(dates[1]);
+            endDate = endDate.AddDays(1).AddSeconds(-1);
+            
+            var invoices = await _uow.InvoiceRepository.GetAllAsync(x=>x.IsActive==true && x.InvoiceDate<= endDate && x.InvoiceDate >= startDate);
+
+            List<InvoiceDTOResponse> invoiceDTOResponseList = new();
+            foreach (var invoice in invoices)
+            {
+                invoiceDTOResponseList.Add(_mapper.Map<InvoiceDTOResponse>(invoice));
+                
             }
 
-
+            return invoiceDTOResponseList;
         }
 
         public async Task<InvoiceDTOResponse> GetAsync(InvoiceDTORequest RequestEntity)

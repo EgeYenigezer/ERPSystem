@@ -26,6 +26,16 @@ namespace ERPSystem.API.Controllers
             return Ok(Invoices);
         }
 
+        [HttpPost("/InvoicesByDate")]
+        public async Task<IActionResult> GetAllAsync(string date)
+        {
+            var Invoices = await _invoiceService.GetAllAsyncByDate(date);
+
+            return Ok(Invoices);
+        }
+
+
+
         [HttpPost("/Invoice")]
         public async Task<IActionResult> GetAsync(InvoiceDTORequest invoiceDTORequest)
         {

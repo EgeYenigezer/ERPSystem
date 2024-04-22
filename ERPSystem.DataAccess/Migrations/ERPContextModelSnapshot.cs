@@ -114,7 +114,7 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("InvoiceDate")
+                    b.Property<DateTime?>("InvoiceDate")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("IsActive")
@@ -152,7 +152,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("ApproverUserId")
+                    b.Property<long?>("ApproverUserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")

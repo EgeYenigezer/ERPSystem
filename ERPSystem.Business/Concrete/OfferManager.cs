@@ -25,6 +25,10 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<OfferDTOResponse> AddAsync(OfferDTORequest RequestEntity)
         {
+            if(RequestEntity.ApproverUserId == 0)
+            {
+                RequestEntity.ApproverUserId = null;
+            }
             var offer = _mapper.Map<Offer>(RequestEntity);
             var dbOffer= await _uow.OfferRepository.AddAsync(offer);
             await _uow.SaveChangeAsync();

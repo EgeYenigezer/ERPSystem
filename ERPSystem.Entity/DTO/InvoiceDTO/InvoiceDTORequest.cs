@@ -10,7 +10,7 @@ namespace ERPSystem.Entity.DTO.InvoiceDTO
     public class InvoiceDTORequest:BaseRequestDTO
     {
         public Int64 Id { get; set; }
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? InvoiceDate { get; set; } = default;
         public decimal TotalPrice { get; set; }
         public string SupplierName { get; set; }
         public string CompanyName { get; set; }

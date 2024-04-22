@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ERPSystem.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class migEg : Migration
+    public partial class migE : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,7 +47,7 @@ namespace ERPSystem.DataAccess.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SupplierName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
@@ -345,7 +345,7 @@ namespace ERPSystem.DataAccess.Migrations
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StatusId = table.Column<long>(type: "bigint", nullable: false),
-                    ApproverUserId = table.Column<long>(type: "bigint", nullable: false),
+                    ApproverUserId = table.Column<long>(type: "bigint", nullable: true),
                     RequestId = table.Column<long>(type: "bigint", nullable: false),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)

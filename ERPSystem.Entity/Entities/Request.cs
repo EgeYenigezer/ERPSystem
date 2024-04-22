@@ -23,7 +23,7 @@ namespace ERPSystem.Entity.Entities
         public Int64 RequesterId { get; set; }
 
         public User ApproverUser { get; set; }
-        public Int64? ApproverId { get; set; }
+        public Int64? ApproverId { get; set; } = null;
 
         public Status Status { get; set; }
         public Int64 StatusId { get; set; }

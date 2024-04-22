@@ -95,7 +95,8 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Price).IsRequired();
                 entity.Property(e => e.SupplierName).HasMaxLength(50);
                 entity.Property(e => e.Description).HasMaxLength(50);
-
+                entity.Property(e=>e.ApproverUserId).IsRequired(false);
+                
                 entity.HasOne(x => x.Status).WithMany(x => x.Offers).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
                 entity.HasOne(x => x.ApproverUser).WithMany(x => x.Offers).HasForeignKey(x => x.ApproverUserId).OnDelete(DeleteBehavior.NoAction);
                 entity.HasOne(x => x.Request).WithMany(x => x.Offers).HasForeignKey(x => x.RequestId).OnDelete(DeleteBehavior.NoAction);

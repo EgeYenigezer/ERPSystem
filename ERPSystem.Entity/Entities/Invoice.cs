@@ -9,7 +9,7 @@ namespace ERPSystem.Entity.Entities
 {
     public class Invoice:BaseEntity
     {
-        public DateTime InvoiceDate { get; set; }
+        public DateTime? InvoiceDate { get; set; } = null;
         public decimal TotalPrice { get; set; }
         public string SupplierName { get; set; }
         public string CompanyName { get; set; }

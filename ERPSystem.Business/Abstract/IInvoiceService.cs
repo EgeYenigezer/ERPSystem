@@ -1,4 +1,5 @@
-﻿using ERPSystem.Entity.DTO.InvoiceDTO;
+﻿using Azure;
+using ERPSystem.Entity.DTO.InvoiceDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace ERPSystem.Business.Abstract
 {
     public interface IInvoiceService:IGenericService<InvoiceDTORequest, InvoiceDTOResponse>
     {
+        public Task<IEnumerable<InvoiceDTOResponse>> GetAllAsyncByDate(string date);
+        
     }
 }

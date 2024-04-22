@@ -17,7 +17,7 @@ namespace ERPSystem.Entity.DTO.RequestDTO
         public Int64 ProductId { get; set; }
         public Int64 UnitId { get; set; }
         public Int64 RequesterId { get; set; }
-        public Int64 ApproverId { get; set; }
+        public Int64? ApproverId { get; set; }
         public Int64 StatusId { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240422103913_migEg")]
-    partial class migEg
+    [Migration("20240422133206_migE")]
+    partial class migE
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,7 +117,7 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("InvoiceDate")
+                    b.Property<DateTime?>("InvoiceDate")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("IsActive")
@@ -155,7 +155,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("ApproverUserId")
+                    b.Property<long?>("ApproverUserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")

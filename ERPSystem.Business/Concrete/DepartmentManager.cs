@@ -44,7 +44,7 @@ namespace ERPSystem.Business.Concrete
             if (RequestEntity.CompanyId != null)
             {
                 var department = _mapper.Map<Department>(RequestEntity);
-                var departments = await _uow.DepartmentRepository.GetAllAsync(x=>x.CompanyId == RequestEntity.CompanyId);
+                var departments = await _uow.DepartmentRepository.GetAllAsync(x=>x.CompanyId == RequestEntity.CompanyId,"Company");
                 List<DepartmentDTOResponse> departmentDTOResponses = new();
 
                 foreach (var item in departments)
@@ -55,7 +55,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var departments = await _uow.DepartmentRepository.GetAllAsync(x => true);
+                var departments = await _uow.DepartmentRepository.GetAllAsync(x => true, "Company");
                 List<DepartmentDTOResponse> departmentDTOResponses = new();
 
                 foreach (var item in departments)
@@ -70,14 +70,16 @@ namespace ERPSystem.Business.Concrete
         public async Task<DepartmentDTOResponse> GetAsync(DepartmentDTORequest RequestEntity)
         {
             var department = _mapper.Map<Department>(RequestEntity);
-            var dbDepartment = await _uow.DepartmentRepository.GetAsync(x=>x.Id==department.Id);
+            var dbDepartment = await _uow.DepartmentRepository.GetAsync(x=>x.Id==department.Id, "Company");
             DepartmentDTOResponse departmentDTOResponse = _mapper.Map<DepartmentDTOResponse>(dbDepartment);
             return departmentDTOResponse;
         }
 
         public async Task UpdateAsync(DepartmentDTORequest RequestEntity)
         {
-            var department = _mapper.Map<Department>(RequestEntity);
+
+            var department = await _uow.DepartmentRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            department = _mapper.Map(RequestEntity,department);
 
             await _uow.DepartmentRepository.UpdateAsync(department);
             await _uow.SaveChangeAsync();
