@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240422065018_migEm")]
-    partial class migEm
+    [Migration("20240422103913_migEg")]
+    partial class migEg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,13 +265,13 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("ApproverId")
+                    b.Property<long?>("ApproverId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -293,7 +293,8 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long>("UnitId")
+                    b.Property<long?>("UnitId")
+                        .IsRequired()
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -593,8 +594,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.HasOne("ERPSystem.Entity.Entities.User", "ApproverUser")
                         .WithMany("ApproverUsers")
                         .HasForeignKey("ApproverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ERPSystem.Entity.Entities.Product", "Product")
                         .WithMany("Requests")

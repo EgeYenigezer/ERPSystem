@@ -36,7 +36,7 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> AddAsync(DepartmentDTORequest departmentDTORequest)
         {
             var department = await _departmentService.AddAsync(departmentDTORequest);
-            return Ok($"Yeni Bir Şirket Eklendi =>\n\r Name: {department.Name} Id: {department.Id}");
+            return Ok($"Yeni Bir Departman Eklendi =>\n\r Name: {department.Name} Id: {department.Id}");
         }
 
         [HttpPost("/UpdateDepartment")]

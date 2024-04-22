@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ERPSystem.Entity.DTO.RoleDTO;
 using ERPSystem.Entity.DTO.UserRoleDTO;
 using ERPSystem.Entity.Entities;
 using System;
@@ -13,8 +14,8 @@ namespace ERPSystem.Business.DTOMapper.RoleMapper
     {
         public RoleRequestMapper()
         {
-            CreateMap<Role,UserRoleDTORequest>();
-            CreateMap<UserRoleDTORequest, Role>();
+            CreateMap<Role,RoleDTORequest>();
+            CreateMap<RoleDTORequest, Role>();
         }
     }
 }

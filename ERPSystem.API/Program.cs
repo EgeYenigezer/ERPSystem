@@ -18,6 +18,19 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<ICompanyService,CompanyManager>();
 builder.Services.AddScoped<IDepartmentService,DepartmentManager>();
+builder.Services.AddScoped<ICategoryService,CategoryManager>();
+builder.Services.AddScoped<IInvoiceService,InvoiceManager>();
+builder.Services.AddScoped<IOfferService,OfferManager>();
+builder.Services.AddScoped<IProcessTypeService,ProcessTypeManager>();
+builder.Services.AddScoped<IProductService,ProductManager>();
+builder.Services.AddScoped<IRequestService,RequestManager>();
+builder.Services.AddScoped<IRoleService,RoleManager>();
+builder.Services.AddScoped<IStatusService,StatusManager>();
+builder.Services.AddScoped<IStockService,StockManager>();
+builder.Services.AddScoped<IStockDetailService,StockDetailManager>();
+builder.Services.AddScoped<IUnitService,UnitManager>();
+builder.Services.AddScoped<IUserService,UserManager>();
+builder.Services.AddScoped<IUserRoleService,UserRoleManager>();
 
 
 var app = builder.Build();

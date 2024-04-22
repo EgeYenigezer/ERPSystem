@@ -41,10 +41,10 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<ProductDTOResponse>> GetAllAsync(ProductDTORequest RequestEntity)
         {
-            if (RequestEntity.CategoryName!=null)
+            if (RequestEntity.CategoryId!=null)
             {
                 var product = _mapper.Map<Product>(RequestEntity);
-                var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>true);
+                var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>true,"Category");
 
                 List<ProductDTOResponse> productDTOResponses = new();
 

@@ -41,53 +41,55 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<RequestDTOResponse>> GetAllAsync(RequestDTORequest RequestEntity)
         {
-            if (RequestEntity.StatusId!=null)
+            List<RequestDTOResponse> requestDTOResponses = new();
+            if (RequestEntity.StatusId!=0)
             {
                 var request = _mapper.Map<Request>(RequestEntity);
 
-                var dbRequests = await _uow.RequestRepository.GetAllAsync(x=>x.StatusId==request.StatusId);
+                var dbRequests = await _uow.RequestRepository.GetAllAsync(x=>x.StatusId==request.StatusId, "RequesterUser", "ApproverUser", "Status","Product","Unit");
 
-                List<RequestDTOResponse> requestDTOResponses = new();
+                
 
                 foreach (var dbRequest in dbRequests)
                 {
                     requestDTOResponses.Add(_mapper.Map<RequestDTOResponse>(dbRequest));
                 }
-                return requestDTOResponses;
+                
             }
-            else if (RequestEntity.ProductId != null)
+            else if (RequestEntity.ProductId != 0)
             {
                 var request = _mapper.Map<Request>(RequestEntity);
 
-                var dbRequests = await _uow.RequestRepository.GetAllAsync(x => x.ProductId == request.ProductId);
+                var dbRequests = await _uow.RequestRepository.GetAllAsync(x => x.ProductId == request.ProductId, "RequesterUser", "ApproverUser", "Status", "Product", "Unit");
 
-                List<RequestDTOResponse> requestDTOResponses = new();
+                
 
                 foreach (var dbRequest in dbRequests)
                 {
                     requestDTOResponses.Add(_mapper.Map<RequestDTOResponse>(dbRequest));
                 }
-                return requestDTOResponses;
+                
             }
             else
             {
-                var dbRequests = await _uow.RequestRepository.GetAllAsync();
+                var dbRequests = await _uow.RequestRepository.GetAllAsync(x=>true,"RequesterUser","ApproverUser", "Status", "Product", "Unit");
 
-                List<RequestDTOResponse> requestDTOResponses = new();
+                
 
                 foreach (var dbRequest in dbRequests)
                 {
                     requestDTOResponses.Add(_mapper.Map<RequestDTOResponse>(dbRequest));
                 }
-                return requestDTOResponses;
+                
             }
+            return requestDTOResponses;
         }
 
         public async Task<RequestDTOResponse> GetAsync(RequestDTORequest RequestEntity)
         {
             var request = _mapper.Map<Request>(RequestEntity);
 
-            var dbRequest = await _uow.RequestRepository.GetAsync(x=>x.Id==request.Id);
+            var dbRequest = await _uow.RequestRepository.GetAsync(x=>x.Id==request.Id,"RequesterUser","ApproverUser", "Status", "Product", "Unit");
             RequestDTOResponse requestDTOResponse = _mapper.Map<RequestDTOResponse>(dbRequest);
             return requestDTOResponse;
 

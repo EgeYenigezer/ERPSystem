@@ -12,7 +12,7 @@ namespace ERPSystem.Entity.DTO.ProductDTO
         public Int64 Id { get; set; }
         public string Name { get; set; }
         public string BrandName { get; set; }
-        public string CategoryName { get; set; }
+        public Int64 CategoryId { get; set; }
         public string Description { get; set; }
     }
 }

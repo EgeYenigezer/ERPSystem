@@ -17,13 +17,13 @@ namespace ERPSystem.Entity.Entities
         public Int64 ProductId { get; set; }
 
         public Unit Unit { get; set; }
-        public Int64 UnitId { get; set; }
+        public Int64? UnitId { get; set; }
 
         public User RequesterUser { get; set; }
         public Int64 RequesterId { get; set; }
 
         public User ApproverUser { get; set; }
-        public Int64 ApproverId { get; set; }
+        public Int64? ApproverId { get; set; }
 
         public Status Status { get; set; }
         public Int64 StatusId { get; set; }

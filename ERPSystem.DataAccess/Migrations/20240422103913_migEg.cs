@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ERPSystem.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class migE : Migration
+    public partial class migEg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Company",
                 columns: table => new
@@ -62,24 +77,6 @@ namespace ERPSystem.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    BrandName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CategoryName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -122,6 +119,29 @@ namespace ERPSystem.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Unit", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    BrandName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Product_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Category",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -210,12 +230,12 @@ namespace ERPSystem.DataAccess.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     UnitId = table.Column<long>(type: "bigint", nullable: false),
                     RequesterId = table.Column<long>(type: "bigint", nullable: false),
-                    ApproverId = table.Column<long>(type: "bigint", nullable: false),
+                    ApproverId = table.Column<long>(type: "bigint", nullable: true),
                     StatusId = table.Column<long>(type: "bigint", nullable: false),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -259,7 +279,7 @@ namespace ERPSystem.DataAccess.Migrations
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StockId = table.Column<long>(type: "bigint", nullable: false),
                     ProcessTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    RecieverId = table.Column<long>(type: "bigint", nullable: false),
+                    ReceiverId = table.Column<long>(type: "bigint", nullable: false),
                     DelivererId = table.Column<long>(type: "bigint", nullable: false),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -283,8 +303,8 @@ namespace ERPSystem.DataAccess.Migrations
                         principalTable: "User",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_StockDetail_User_RecieverId",
-                        column: x => x.RecieverId,
+                        name: "FK_StockDetail_User_ReceiverId",
+                        column: x => x.ReceiverId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -371,6 +391,11 @@ namespace ERPSystem.DataAccess.Migrations
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_CategoryId",
+                table: "Product",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Request_ApproverId",
                 table: "Request",
                 column: "ApproverId");
@@ -421,9 +446,9 @@ namespace ERPSystem.DataAccess.Migrations
                 column: "ProcessTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockDetail_RecieverId",
+                name: "IX_StockDetail_ReceiverId",
                 table: "StockDetail",
-                column: "RecieverId");
+                column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StockDetail_StockId",
@@ -487,6 +512,9 @@ namespace ERPSystem.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "Company");

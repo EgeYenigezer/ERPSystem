@@ -135,7 +135,8 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.Title).HasMaxLength(50);
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.Description).HasMaxLength(2000);
+                entity.Property(e => e.ApproverId).IsRequired(false);
 
                 entity.HasOne(x => x.Product).WithMany(x => x.Requests).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.NoAction);
 
