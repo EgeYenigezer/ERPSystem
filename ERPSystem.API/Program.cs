@@ -3,6 +3,7 @@ using ERPSystem.Business.Concrete;
 using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.DataAccess.Concrete.Context;
 using ERPSystem.DataAccess.Concrete.DataManagement;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,8 @@ builder.Services.AddScoped<IStockDetailService,StockDetailManager>();
 builder.Services.AddScoped<IUnitService,UnitManager>();
 builder.Services.AddScoped<IUserService,UserManager>();
 builder.Services.AddScoped<IUserRoleService,UserRoleManager>();
+
+builder.Services.AddFluentValidationAutoValidation();
 
 
 var app = builder.Build();
