@@ -64,7 +64,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(UnitDTORequest RequestEntity)
         {
-            var unit = _mapper.Map<Unit>(RequestEntity);
+            var unit = await _uow.UnitRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            unit = _mapper.Map(RequestEntity,unit);
             await _uow.UnitRepository.UpdateAsync(unit);
             await _uow.SaveChangeAsync();
         }

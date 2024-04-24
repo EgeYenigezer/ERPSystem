@@ -65,7 +65,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(CategoryDTORequest RequestEntity)
         {
-            var category = _mapper.Map<Category>(RequestEntity);
+            var category = await _uow.CategoryRepository.GetAsync(x=>x.Id==RequestEntity.Id);
+            category = _mapper.Map(RequestEntity,category);
 
             await _uow.CategoryRepository.UpdateAsync(category);
 

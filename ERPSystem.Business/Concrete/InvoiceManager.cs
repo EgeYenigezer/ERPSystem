@@ -151,7 +151,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(InvoiceDTORequest RequestEntity)
         {
-            var invoice = _mapper.Map<Invoice>(RequestEntity);
+            var invoice = await _uow.InvoiceRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            invoice = _mapper.Map(RequestEntity,invoice);
 
             await _uow.InvoiceRepository.UpdateAsync(invoice);
 

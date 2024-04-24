@@ -41,10 +41,22 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<DepartmentDTOResponse>> GetAllAsync(DepartmentDTORequest RequestEntity)
         {
-            if (RequestEntity.CompanyId != null)
+            if (RequestEntity.CompanyId>0)
             {
                 var department = _mapper.Map<Department>(RequestEntity);
                 var departments = await _uow.DepartmentRepository.GetAllAsync(x=>x.CompanyId == RequestEntity.CompanyId,"Company");
+                List<DepartmentDTOResponse> departmentDTOResponses = new();
+
+                foreach (var item in departments)
+                {
+                    departmentDTOResponses.Add(_mapper.Map<DepartmentDTOResponse>(item));
+                }
+                return departmentDTOResponses;
+            }
+            else if (!(RequestEntity.Name.Contains("string")))
+            {
+                var department = _mapper.Map<Department>(RequestEntity);
+                var departments = await _uow.DepartmentRepository.GetAllAsync(x => x.Name.Contains($"{RequestEntity.Name}"), "Company");
                 List<DepartmentDTOResponse> departmentDTOResponses = new();
 
                 foreach (var item in departments)
@@ -79,6 +91,10 @@ namespace ERPSystem.Business.Concrete
         {
 
             var department = await _uow.DepartmentRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            if (RequestEntity.CompanyId == 0)
+            {
+                RequestEntity.CompanyId = department.CompanyId;
+            }
             department = _mapper.Map(RequestEntity,department);
 
             await _uow.DepartmentRepository.UpdateAsync(department);

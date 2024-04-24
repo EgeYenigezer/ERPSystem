@@ -19,7 +19,7 @@ namespace ERPSystem.Entity.Entities
         public IEnumerable<UserRole> UserRoles { get; set; }
         public IEnumerable<Request> RequesterUsers { get; set; }
         public IEnumerable<Request> ApproverUsers { get; set; }
-        public IEnumerable<Offer> Offers { get; set; }
+        public IEnumerable<Offer> ApproverOfferUsers { get; set; }
         public IEnumerable<StockDetail> RecieverStockDetails { get; set; }
         public IEnumerable<StockDetail> DelivererStockDetails { get; set; }
     }

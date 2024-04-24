@@ -48,7 +48,7 @@ namespace ERPSystem.Business.Concrete
                 if (RequestEntity.RoleId != null)
                 {
                     var userRole = _mapper.Map<UserRole>(RequestEntity);
-                    var filterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.RoleId==userRole.RoleId && x.IsActive==true);
+                    var filterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.RoleId==userRole.RoleId && x.IsActive==true,"Role","User");
 
                     foreach (var filterRoleUser in filterRoleUsers)
                     {
@@ -58,7 +58,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var noFilterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.IsActive==true);
+                var noFilterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.IsActive==true, "Role", "User");
 
                 foreach (var noFilterRoleUser in noFilterRoleUsers)
                 {
@@ -72,7 +72,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<UserRoleDTOResponse> GetAsync(UserRoleDTORequest RequestEntity)
         {
             var userRole = _mapper.Map<UserRole>(RequestEntity);
-            var dbUserRole = await _uow.UserRoleRepository.GetAsync(x=>x.Id==userRole.Id);
+            var dbUserRole = await _uow.UserRoleRepository.GetAsync(x=>x.Id==userRole.Id, "Role", "User");
 
             UserRoleDTOResponse userRoleDTOResponse = _mapper.Map<UserRoleDTOResponse>(dbUserRole);
             return userRoleDTOResponse;
@@ -80,7 +80,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(UserRoleDTORequest RequestEntity)
         {
-            var userRole = _mapper.Map<UserRole>(RequestEntity);
+            var userRole = await _uow.UserRoleRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            userRole = _mapper.Map(RequestEntity,userRole);
             await _uow.UserRoleRepository.UpdateAsync(userRole);
             await _uow.SaveChangeAsync();
         }

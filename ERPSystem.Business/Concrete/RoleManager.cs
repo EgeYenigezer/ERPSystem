@@ -66,7 +66,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(RoleDTORequest RequestEntity)
         {
-            var role = _mapper.Map<Role>(RequestEntity);
+            var role = await _uow.RoleRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            role = _mapper.Map(RequestEntity,role);
             await _uow.RoleRepository.UpdateAsync(role);
             await _uow.SaveChangeAsync();
         }

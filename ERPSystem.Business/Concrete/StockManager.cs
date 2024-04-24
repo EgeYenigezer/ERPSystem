@@ -43,7 +43,7 @@ namespace ERPSystem.Business.Concrete
             if (RequestEntity.ProductId!=null)
             {
                 var stock = _mapper.Map<Stock>(RequestEntity);
-                var dbStocks =await _uow.StockRepository.GetAllAsync(x=>x.ProductId==stock.ProductId);
+                var dbStocks =await _uow.StockRepository.GetAllAsync(x=>x.ProductId==stock.ProductId,"Product","Unit","Department");
 
                 List<StockDTOResponse> stockDTOResponses = new();
                 foreach(var dbStock in dbStocks)
@@ -55,7 +55,7 @@ namespace ERPSystem.Business.Concrete
             else if (RequestEntity.DepartmentId!=null)
             {
                 var stock = _mapper.Map<Stock>(RequestEntity);
-                var dbStocks = await _uow.StockRepository.GetAllAsync(x => x.DepartmentId == stock.DepartmentId);
+                var dbStocks = await _uow.StockRepository.GetAllAsync(x => x.DepartmentId == stock.DepartmentId, "Product", "Unit", "Department");
 
                 List<StockDTOResponse> stockDTOResponses = new();
                 foreach (var dbStock in dbStocks)
@@ -80,7 +80,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<StockDTOResponse> GetAsync(StockDTORequest RequestEntity)
         {
             var stock = _mapper.Map<Stock>(RequestEntity);
-            var dbStock = await _uow.StockRepository.GetAsync(x=>x.Id==stock.Id);
+            var dbStock = await _uow.StockRepository.GetAsync(x=>x.Id==stock.Id, "Product", "Unit", "Department");
             StockDTOResponse stockDTOResponse = _mapper.Map<StockDTOResponse>(dbStock);
             return stockDTOResponse;
 
@@ -88,7 +88,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(StockDTORequest RequestEntity)
         {
-            var stock = _mapper.Map<Stock>(RequestEntity);
+            var stock = await _uow.StockRepository.GetAsync(x => x.Id == RequestEntity.Id);
+            stock = _mapper.Map(RequestEntity,stock);
             await _uow.StockRepository.UpdateAsync(stock);
             await _uow.SaveChangeAsync();
         }

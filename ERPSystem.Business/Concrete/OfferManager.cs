@@ -49,11 +49,11 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<OfferDTOResponse>> GetAllAsync(OfferDTORequest RequestEntity)
         {
-            if (RequestEntity.SupplierName!=null)
+            if (!(RequestEntity.SupplierName.Contains("string")))
             {
                 var offer = _mapper.Map<Offer>(RequestEntity);
 
-                var dbOffers = await _uow.OfferRepository.GetAllAsync(x=>x.SupplierName==offer.SupplierName);
+                var dbOffers = await _uow.OfferRepository.GetAllAsync(x=>x.SupplierName.Contains($"{RequestEntity.SupplierName}"),"Status", "Request", "ApproverOfferUser");
 
                 List<OfferDTOResponse> offerDTOResponses = new();
 
@@ -65,7 +65,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var dbOffers = await _uow.OfferRepository.GetAllAsync();
+                var dbOffers = await _uow.OfferRepository.GetAllAsync(x=>true, "Status", "ApproverOfferUser", "Request");
 
                 List<OfferDTOResponse> offerDTOResponses = new();
 
@@ -83,7 +83,7 @@ namespace ERPSystem.Business.Concrete
         {
             var offer = _mapper.Map<Offer>(RequestEntity);
 
-            var dbOffer = await _uow.OfferRepository.GetAsync(x=>x.Id==offer.Id);
+            var dbOffer = await _uow.OfferRepository.GetAsync(x=>x.Id==offer.Id, "Status", "ApproverOfferUser", "Request");
 
             OfferDTOResponse offerDTOResponse = _mapper.Map<OfferDTOResponse>(dbOffer);
 
@@ -92,8 +92,12 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(OfferDTORequest RequestEntity)
         {
-            var offer = _mapper.Map<Offer>(RequestEntity);
-
+            if (RequestEntity.ApproverUserId == 0)
+            {
+                RequestEntity.ApproverUserId = null;
+            }
+            var offer = await _uow.OfferRepository.GetAsync(x=>x.Id==RequestEntity.Id);
+            offer = _mapper.Map(RequestEntity, offer);
             await _uow.OfferRepository.UpdateAsync(offer);
             await _uow.SaveChangeAsync();
         }

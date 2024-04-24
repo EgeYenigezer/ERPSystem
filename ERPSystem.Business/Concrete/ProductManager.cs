@@ -41,7 +41,7 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<IEnumerable<ProductDTOResponse>> GetAllAsync(ProductDTORequest RequestEntity)
         {
-            if (RequestEntity.CategoryId!=null)
+            if (RequestEntity.CategoryId>0)
             {
                 var product = _mapper.Map<Product>(RequestEntity);
                 var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>true,"Category");
@@ -55,10 +55,24 @@ namespace ERPSystem.Business.Concrete
 
                 return productDTOResponses;
             }
-            else if (RequestEntity.BrandName!=null)
+            else if (!(RequestEntity.BrandName.Contains("string")))
             {
                 var product = _mapper.Map<Product>(RequestEntity);
-                var dbProducts = await _uow.ProductRepository.GetAllAsync(x => x.BrandName == product.BrandName);
+                var dbProducts = await _uow.ProductRepository.GetAllAsync(x => x.BrandName.Contains($"{RequestEntity.BrandName}"), "Category");
+
+                List<ProductDTOResponse> productDTOResponses = new();
+
+                foreach (var dbProduct in dbProducts)
+                {
+                    productDTOResponses.Add(_mapper.Map<ProductDTOResponse>(dbProduct));
+                }
+
+                return productDTOResponses;
+            }
+            else if (!(RequestEntity.Name.Contains("string")))
+            {
+                var product = _mapper.Map<Product>(RequestEntity);
+                var dbProducts = await _uow.ProductRepository.GetAllAsync(x => x.Name.Contains($"{RequestEntity.Name}"), "Category");
 
                 List<ProductDTOResponse> productDTOResponses = new();
 
@@ -71,7 +85,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var dbProducts = await _uow.ProductRepository.GetAllAsync();
+                var dbProducts = await _uow.ProductRepository.GetAllAsync(x=>true, "Category");
 
                 List<ProductDTOResponse> productDTOResponses = new();
 
@@ -88,7 +102,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<ProductDTOResponse> GetAsync(ProductDTORequest RequestEntity)
         {
             var product = _mapper.Map<Product>(RequestEntity);
-            var dbProduct = await _uow.ProductRepository.GetAsync(x=>x.Id==product.Id);
+            var dbProduct = await _uow.ProductRepository.GetAsync(x=>x.Id==product.Id, "Category");
 
             ProductDTOResponse productDTOResponse = _mapper.Map<ProductDTOResponse>(dbProduct);
 
@@ -97,7 +111,13 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(ProductDTORequest RequestEntity)
         {
-            var product = _mapper.Map<Product>(RequestEntity);
+
+            var product =await _uow.ProductRepository.GetAsync(x=>x.Id==RequestEntity.Id);
+            if (RequestEntity.CategoryId == 0)
+            {
+                RequestEntity.CategoryId = product.CategoryId;
+            }
+            product = _mapper.Map(RequestEntity,product);
             await _uow.ProductRepository.UpdateAsync(product);
             await _uow.SaveChangeAsync();
         }

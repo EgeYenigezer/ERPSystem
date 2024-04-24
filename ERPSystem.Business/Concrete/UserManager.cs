@@ -48,7 +48,7 @@ namespace ERPSystem.Business.Concrete
                 if (RequestEntity.DepartmentId !=null)
                 {
                     var filterUser = _mapper.Map<User>(RequestEntity);
-                    var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.DepartmentId==filterUser.DepartmentId);
+                    var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.DepartmentId==filterUser.DepartmentId,"Department");
 
                     foreach (var user in departmentFilterUsers)
                     {
@@ -59,7 +59,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.IsActive==true);
+                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.IsActive==true, "Department");
                 foreach (var user in noFilterUsers)
                 {
                     userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
@@ -73,7 +73,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<UserDTOResponse> GetAsync(UserDTORequest RequestEntity)
         {
             var user = _mapper.Map<User>(RequestEntity);
-            var dbUser = await _uow.UserRepository.GetAsync(x=>x.Id==user.Id && x.IsActive==true);
+            var dbUser = await _uow.UserRepository.GetAsync(x=>x.Id==user.Id && x.IsActive==true, "Department");
 
             UserDTOResponse userDTOResponse =_mapper.Map<UserDTOResponse>(dbUser);
             return userDTOResponse;
@@ -81,7 +81,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(UserDTORequest RequestEntity)
         {
-            var user = _mapper.Map<User>(RequestEntity);
+            var user = await _uow.UserRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            user = _mapper.Map(RequestEntity,user);
             await _uow.UserRepository.UpdateAsync(user);
             await _uow.SaveChangeAsync();
         }

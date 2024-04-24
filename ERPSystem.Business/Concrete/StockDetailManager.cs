@@ -44,7 +44,7 @@ namespace ERPSystem.Business.Concrete
             if (RequestEntity.StockId!=null)
             {
                 var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
-                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x=>x.StockId==stockDetail.StockId);
+                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x=>x.StockId==stockDetail.StockId,"Stock","ProcessType","Receiver","Deliever");
 
                 List<StockDetailDTOResponse> stockDetailDTOResponses = new();
 
@@ -57,7 +57,7 @@ namespace ERPSystem.Business.Concrete
             else if (RequestEntity.ProcessTypeId!=null)
             {
                 var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
-                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x => x.ProcessTypeId == stockDetail.ProcessTypeId);
+                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x => x.ProcessTypeId == stockDetail.ProcessTypeId,"Stock","ProcessType","Receiver","Deliever");
 
                 List<StockDetailDTOResponse> stockDetailDTOResponses = new();
 
@@ -70,7 +70,7 @@ namespace ERPSystem.Business.Concrete
             else if(RequestEntity.DelivererId != null)
             {
                 var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
-                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x => x.DelivererId == stockDetail.DelivererId);
+                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x => x.DelivererId == stockDetail.DelivererId, "Stock", "ProcessType", "Receiver", "Deliever");
 
                 List<StockDetailDTOResponse> stockDetailDTOResponses = new();
 
@@ -83,7 +83,7 @@ namespace ERPSystem.Business.Concrete
             else
             {
                 
-                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync();
+                var dbStockDetails = await _uow.StockDetailRepository.GetAllAsync(x=>true, "Stock", "ProcessType", "Receiver", "Deliever");
 
                 List<StockDetailDTOResponse> stockDetailDTOResponses = new();
 
@@ -98,7 +98,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<StockDetailDTOResponse> GetAsync(StockDetailDTORequest RequestEntity)
         {
             var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
-            var dbStockDetail = await _uow.StockDetailRepository.GetAsync(x=>x.Id==stockDetail.Id);
+            var dbStockDetail = await _uow.StockDetailRepository.GetAsync(x=>x.Id==stockDetail.Id, "Stock", "ProcessType", "Receiver", "Deliever");
 
             StockDetailDTOResponse stockDetailDTOResponse = _mapper.Map<StockDetailDTOResponse>(dbStockDetail);
 
@@ -107,7 +107,12 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(StockDetailDTORequest RequestEntity)
         {
-            var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
+            var stockDetail = await _uow.StockDetailRepository.GetAsync(x=>x.Id==RequestEntity.Id);
+            if (RequestEntity.StockId == 0)
+            {
+                RequestEntity.StockId = stockDetail.StockId;
+            }
+            stockDetail = _mapper.Map(RequestEntity,stockDetail);
             await _uow.StockDetailRepository.UpdateAsync(stockDetail);
             await _uow.SaveChangeAsync();
         }

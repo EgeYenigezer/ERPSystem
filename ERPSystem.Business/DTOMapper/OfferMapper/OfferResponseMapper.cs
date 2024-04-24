@@ -14,14 +14,18 @@ namespace ERPSystem.Business.DTOMapper.OfferMapper
         public OfferResponseMapper()
         {
             CreateMap<Offer, OfferDTOResponse>()
-                .ForMember(dest => dest.ApproverUserName, opt =>
+                .ForMember(dest => dest.ApproverUser, opt =>
             {
-                opt.MapFrom(src => src.ApproverUser.Name);
+                opt.MapFrom(src => src.ApproverOfferUser.Name);
             })
                 .ForMember(dest => dest.StatusName, opt =>
             {
                 opt.MapFrom(src => src.Status.Name);
-            });
+            }).
+            ForMember(dest => dest.Name, opt =>
+            {
+                opt.MapFrom(src=>src.Request.Title);
+            }).ReverseMap();
         }
     }
 }

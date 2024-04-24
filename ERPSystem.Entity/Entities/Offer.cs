@@ -12,10 +12,13 @@ namespace ERPSystem.Entity.Entities
         public string SupplierName { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+
         public Status Status { get; set; }
         public Int64 StatusId { get; set; }
-        public User ApproverUser { get; set; }
+
+        public User ApproverOfferUser { get; set; }
         public Int64? ApproverUserId { get; set; } = null;
+
         public Request Request { get; set; }
         public Int64 RequestId { get; set; }
     }

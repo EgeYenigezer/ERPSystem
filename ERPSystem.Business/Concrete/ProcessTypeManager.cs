@@ -64,8 +64,9 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(ProcessTypeDTORequest RequestEntity)
         {
-            var processType = _mapper.Map<ProcessType>(RequestEntity);
 
+            var processType = await _uow.ProcessTypeRepository.GetAsync(x=>x.Id == RequestEntity.Id);
+            processType = _mapper.Map(RequestEntity,processType);
             await _uow.ProcessTypeRepository.UpdateAsync(processType);
             await _uow.SaveChangeAsync();
         }
