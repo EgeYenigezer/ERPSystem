@@ -20,7 +20,6 @@ namespace ERPSystem.Business.Utilities.Validation.InvoiceValidator
             RuleFor(x => x.CompanyName).MinimumLength(3).MaximumLength(50).WithMessage("Şirket ismi 3 karakterden küçük , 50 karakterden büyük olamaz!");
             RuleFor(x=>x.Quantity).NotEmpty().WithMessage("Miktar girilmek zorundadır!");
             RuleFor(x=>x.TotalPrice).NotEmpty().WithMessage("Fiyat girilmek zorundadır!");
-            
         }
     }
 }

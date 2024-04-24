@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ERPSystem.Business.Abstract;
 using ERPSystem.DataAccess.Abstract.DataManagement;
+using ERPSystem.Entity.DTO.LoginDTO;
 using ERPSystem.Entity.DTO.UserDTO;
 using ERPSystem.Entity.Entities;
 using System;
@@ -85,6 +86,13 @@ namespace ERPSystem.Business.Concrete
             user = _mapper.Map(RequestEntity,user);
             await _uow.UserRepository.UpdateAsync(user);
             await _uow.SaveChangeAsync();
+        }
+
+        public async Task<LoginDTOResponse> LoginAsync(LoginDTORequest RequestEntity)
+        {
+            var user = await _uow.UserRepository.GetAsync(x=>x.Email == RequestEntity.Name && x.Password == RequestEntity.Password,"Department.Company","UserRoles.Role");
+            var userResponse = _mapper.Map<LoginDTOResponse>(user);
+            return userResponse;
         }
     }
 }
