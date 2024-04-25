@@ -35,7 +35,7 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> AddAsync(ProductDTORequest productDTORequest)
         {
             var addedProduct = await _productService.AddAsync(productDTORequest);
-            return Ok($"Yeni Bir Ürün Eklendi =>\n\r Name: {addedProduct.Name} Id: {addedProduct.Id}");
+            return Ok($"Yeni Bir Ürün Eklendi Name:{addedProduct.Name} Id:{addedProduct.Id}");
         }
 
         [HttpPost("/UpdateProduct")]

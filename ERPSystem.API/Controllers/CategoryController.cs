@@ -37,7 +37,7 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> AddAsync(CategoryDTORequest categoryDTORequest)
         {
             var category = await _categoryService.AddAsync(categoryDTORequest);
-            return Ok($"Yeni Bir Kategori Eklendi =>\n\r Name: {category.Name} Id: {category.Id}");
+            return Ok($"Yeni Bir Kategori Eklendi  Name: {category.Name} Id: {category.Id}");
         }
 
         [HttpPost("/UpdateCategory")]
