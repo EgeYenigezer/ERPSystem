@@ -39,7 +39,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<DepartmentDTOResponse>> GetAllAsync(DepartmentDTORequest RequestEntity)
+        public async Task<List<DepartmentDTOResponse>> GetAllAsync(DepartmentDTORequest RequestEntity)
         {
             if (RequestEntity.CompanyId>0)
             {

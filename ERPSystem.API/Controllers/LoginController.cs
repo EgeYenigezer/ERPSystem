@@ -3,6 +3,7 @@ using ERPSystem.Business.Abstract;
 using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.LoginDTO;
 using ERPSystem.Entity.DTO.UserDTO;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -75,11 +76,11 @@ namespace ERPSystem.API.Controllers
 
                 user.Token = tokenHandler.WriteToken(token);
 
-                return Ok(user);
+                return Ok(ApiResponse<LoginDTOResponse>.SuccesWithData(user));
             }
 
 
-            return Ok();
+            return Ok(ApiResponse<LoginDTOResponse>.SuccesNoDataFound());
         }
     }
 }

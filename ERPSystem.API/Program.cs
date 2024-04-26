@@ -1,3 +1,4 @@
+using ERPSystem.API.Middleware;
 using ERPSystem.Business.Abstract;
 using ERPSystem.Business.Concrete;
 using ERPSystem.DataAccess.Abstract.DataManagement;
@@ -46,6 +47,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseGlobalExceptionMiddleware();
 
 app.UseAuthorization();
 

@@ -10,7 +10,7 @@ namespace ERPSystem.Business.Abstract
 {
     public interface IInvoiceService:IGenericService<InvoiceDTORequest, InvoiceDTOResponse>
     {
-        public Task<IEnumerable<InvoiceDTOResponse>> GetAllAsyncByDate(string date);
+        public Task<List<InvoiceDTOResponse>> GetAllAsyncByDate(string date);
         
     }
 }

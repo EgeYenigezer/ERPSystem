@@ -38,7 +38,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<UnitDTOResponse>> GetAllAsync(UnitDTORequest RequestEntity)
+        public async Task<List<UnitDTOResponse>> GetAllAsync(UnitDTORequest RequestEntity)
         {
             var unit = _mapper.Map<Unit>(RequestEntity);
             var dbUnits = await _uow.UnitRepository.GetAllAsync(x=>x.IsActive ==true);

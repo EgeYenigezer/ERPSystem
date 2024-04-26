@@ -1,6 +1,10 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.ProductValidator;
+using ERPSystem.Business.Utilities.Validation.RequestValidator;
 using ERPSystem.Entity.DTO.ProductDTO;
 using ERPSystem.Entity.DTO.RequestDTO;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,35 +25,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(RequestDTORequest requestDTORequest)
         {
             var requests = await _requestService.GetAllAsync(requestDTORequest);
-            return Ok(requests);
+            return Ok(ApiResponse<List<RequestDTOResponse>>.SuccesWithData(requests));
         }
 
         [HttpPost("/Request")]
         public async Task<IActionResult> GetAsync(RequestDTORequest requestDTORequest)
         {
             var request = await _requestService.GetAsync(requestDTORequest);
-            return Ok(request);
+            return Ok(ApiResponse<RequestDTOResponse>.SuccesWithData(request));
         }
 
         [HttpPost("/AddRequest")]
+        [ValidationFilter(typeof(RequestValidation))]
         public async Task<IActionResult> AddAsync(RequestDTORequest requestDTORequest)
         {
             var addedRequest = await _requestService.AddAsync(requestDTORequest);
-            return Ok($"Yeni Bir İstek Eklendi =>\n\r Name: {addedRequest.Title} Id: {addedRequest.Id}");
+            return Ok(ApiResponse<RequestDTOResponse>.SuccesWithData(addedRequest));
         }
 
         [HttpPost("/UpdateRequest")]
+        [ValidationFilter(typeof(RequestValidation))]
         public async Task<IActionResult> UpdateAsync(RequestDTORequest requestDTORequest)
         {
             await _requestService.UpdateAsync(requestDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<RequestDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteRequest")]
         public async Task<IActionResult> DeleteAsync(RequestDTORequest requestDTORequest)
         {
             await _requestService.DeleteAsync(requestDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<RequestDTOResponse>.SuccesWithOutData());
         }
     }
 }

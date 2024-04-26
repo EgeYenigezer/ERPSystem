@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.CategoryValidator;
 using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.CategoryDTO;
 using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +24,8 @@ namespace ERPSystem.Business.Concrete
             _uow = uow;
             _mapper = mapper;
         }
+
+
         public async Task<CategoryDTOResponse> AddAsync(CategoryDTORequest RequestEntity)
         {
             var category = _mapper.Map<Category>(RequestEntity);
@@ -37,7 +42,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<CategoryDTOResponse>> GetAllAsync(CategoryDTORequest RequestEntity)
+        public async Task<List<CategoryDTOResponse>> GetAllAsync(CategoryDTORequest RequestEntity)
         {
             var category = _mapper.Map<Category>(RequestEntity); /*Filtreleme yapmak istersek kullanbiliriz */
 

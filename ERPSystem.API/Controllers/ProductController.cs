@@ -1,6 +1,10 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.ProcessTypeValidator;
+using ERPSystem.Business.Utilities.Validation.ProductValidator;
 using ERPSystem.Entity.DTO.ProductDTO;
 using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,35 +25,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(ProductDTORequest productDTORequest)
         {
             var products = await _productService.GetAllAsync(productDTORequest);
-            return Ok(products);
+            return Ok(ApiResponse<List<ProductDTOResponse>>.SuccesWithData(products));
         }
 
         [HttpPost("/Product")]
         public async Task<IActionResult> GetAsync(ProductDTORequest productDTORequest)
         {
             var product = await _productService.GetAsync(productDTORequest);
-            return Ok(product);
+            return Ok(ApiResponse<ProductDTOResponse>.SuccesWithData(product));
         }
 
         [HttpPost("/AddProduct")]
+        [ValidationFilter(typeof(ProductValidation))]
         public async Task<IActionResult> AddAsync(ProductDTORequest productDTORequest)
         {
             var addedProduct = await _productService.AddAsync(productDTORequest);
-            return Ok($"Yeni Bir Ürün Eklendi Name:{addedProduct.Name} Id:{addedProduct.Id}");
+            return Ok(ApiResponse<ProductDTOResponse>.SuccesWithData(addedProduct));
         }
 
         [HttpPost("/UpdateProduct")]
+        [ValidationFilter(typeof(ProductValidation))]
         public async Task<IActionResult> UpdateAsync(ProductDTORequest productDTORequest)
         {
             await _productService.UpdateAsync(productDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<ProductDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteProduct")]
         public async Task<IActionResult> DeleteAsync(ProductDTORequest productDTORequest)
         {
             await _productService.DeleteAsync(productDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<ProductDTOResponse>.SuccesWithOutData());
         }
     }
 }

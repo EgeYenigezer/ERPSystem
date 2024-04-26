@@ -1,7 +1,11 @@
 ﻿using Azure.Core;
 using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.DepartmentValidator;
+using ERPSystem.Business.Utilities.Validation.InvoiceValidator;
 using ERPSystem.Entity.DTO.InvoiceDTO;
 using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,17 +25,17 @@ namespace ERPSystem.API.Controllers
         [HttpPost("/Invoices")]
         public async Task<IActionResult> GetAllAsync(InvoiceDTORequest invoiceDTORequest)
         {
-            var Invoices = await _invoiceService.GetAllAsync(invoiceDTORequest);
+            var invoices = await _invoiceService.GetAllAsync(invoiceDTORequest);
 
-            return Ok(Invoices);
+            return Ok(ApiResponse<List<InvoiceDTOResponse>>.SuccesWithData(invoices));
         }
 
         [HttpPost("/InvoicesByDate")]
         public async Task<IActionResult> GetAllAsync(string date)
         {
-            var Invoices = await _invoiceService.GetAllAsyncByDate(date);
+            var invoices = await _invoiceService.GetAllAsyncByDate(date);
 
-            return Ok(Invoices);
+            return Ok(ApiResponse<List<InvoiceDTOResponse>>.SuccesWithData(invoices));
         }
 
 
@@ -39,31 +43,33 @@ namespace ERPSystem.API.Controllers
         [HttpPost("/Invoice")]
         public async Task<IActionResult> GetAsync(InvoiceDTORequest invoiceDTORequest)
         {
-            var Invoice = await _invoiceService.GetAsync(invoiceDTORequest);
+            var invoice = await _invoiceService.GetAsync(invoiceDTORequest);
 
-            return Ok(Invoice);
+            return Ok(ApiResponse<InvoiceDTOResponse>.SuccesWithData(invoice));
         }
 
         [HttpPost("/AddInvoice")]
+        [ValidationFilter(typeof(InvoiceValidation))]
         public async Task<IActionResult> AddAsync(InvoiceDTORequest invoiceDTORequest)
         {
             var addedInvoice = await _invoiceService.AddAsync(invoiceDTORequest);
 
-            return Ok($"{addedInvoice.Id} 'li Fatura Eklendi! ");
+            return Ok(ApiResponse<InvoiceDTOResponse>.SuccesWithData(addedInvoice));
         }
 
         [HttpPost("/UpdateInvoice")]
+        [ValidationFilter(typeof(InvoiceValidation))]
         public async Task<IActionResult> UpdateAsync(InvoiceDTORequest invoiceDTORequest)
         {
             await _invoiceService.UpdateAsync(invoiceDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<InvoiceDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteInvoice")]
         public async Task<IActionResult> DeleteAsync(InvoiceDTORequest invoiceDTORequest)
         {
             await _invoiceService.DeleteAsync(invoiceDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<InvoiceDTOResponse>.SuccesWithOutData());
         }
 
     }

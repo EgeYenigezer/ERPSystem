@@ -1,6 +1,11 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.UserRoleValidator;
+using ERPSystem.Business.Utilities.Validation.UserValidator;
 using ERPSystem.Entity.DTO.UserDTO;
 using ERPSystem.Entity.DTO.UserRoleDTO;
+using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,35 +26,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(UserRoleDTORequest userRoleDTORequest)
         {
             var userRoles = await _userRoleService.GetAllAsync(userRoleDTORequest);
-            return Ok(userRoles);
+            return Ok(ApiResponse<List<UserRoleDTOResponse>>.SuccesWithData(userRoles));
         }
 
         [HttpPost("/UserRole")]
         public async Task<IActionResult> GetAsync(UserRoleDTORequest userRoleDTORequest)
         {
             var userRole = await _userRoleService.GetAsync(userRoleDTORequest);
-            return Ok(userRole);
+            return Ok(ApiResponse<UserRoleDTOResponse>.SuccesWithData(userRole));
         }
 
         [HttpPost("/AddUserRole")]
+        [ValidationFilter(typeof(UserRoleValidation))]
         public async Task<IActionResult> AddAsync(UserRoleDTORequest userRoleDTORequest)
         {
             var addedUserRole = await _userRoleService.AddAsync(userRoleDTORequest);
-            return Ok($"Yeni Bir UserRole Eklendi =>\n\r Name: {addedUserRole.UserName + addedUserRole.RoleName} Id: {addedUserRole.Id}");
+            return Ok(ApiResponse<UserRoleDTOResponse>.SuccesWithData(addedUserRole));
         }
 
         [HttpPost("/UpdateUserRole")]
+        [ValidationFilter(typeof(UserRoleValidation))]
         public async Task<IActionResult> UpdateAsync(UserRoleDTORequest userRoleDTORequest)
         {
             await _userRoleService.UpdateAsync(userRoleDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteUserRole")]
         public async Task<IActionResult> DeleteAsync(UserRoleDTORequest userRoleDTORequest)
         {
             await _userRoleService.DeleteAsync(userRoleDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithOutData());
         }
     }
 }

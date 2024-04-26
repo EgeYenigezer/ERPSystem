@@ -1,5 +1,9 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.InvoiceValidator;
+using ERPSystem.Business.Utilities.Validation.OfferValidator;
 using ERPSystem.Entity.DTO.OfferDTO;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,35 +24,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(OfferDTORequest offerDTORequest)
         {
             var offers = await _offerService.GetAllAsync(offerDTORequest);
-            return Ok(offers);
+            return Ok(ApiResponse<List<OfferDTOResponse>>.SuccesWithData(offers));
         }
 
         [HttpPost("/Offer")]
         public async Task<IActionResult> GetAsync(OfferDTORequest offerDTORequest)
         {
             var offer = await _offerService.GetAsync(offerDTORequest);
-            return Ok(offer);
+            return Ok(ApiResponse<OfferDTOResponse>.SuccesWithData(offer));
         }
 
         [HttpPost("/AddOffer")]
+        [ValidationFilter(typeof(OfferValidation))]
         public async Task<IActionResult> AddAsync(OfferDTORequest offerDTORequest)
         {
             var addedOffer = await _offerService.AddAsync(offerDTORequest);
-            return Ok($"{addedOffer.SupplierName} adlı tedarikçinin teklifi sisteme eklendi.");
+            return Ok(ApiResponse<OfferDTOResponse>.SuccesWithData(addedOffer));
         }
 
         [HttpPost("/UpdateOffer")]
+        [ValidationFilter(typeof(OfferValidation))]
         public async Task<IActionResult> UpdateAsync(OfferDTORequest offerDTORequest)
         {
             await _offerService.UpdateAsync(offerDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<OfferDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteOffer")]
         public async Task<IActionResult> DeleteAsync(OfferDTORequest offerDTORequest)
         {
             await _offerService.DeleteAsync(offerDTORequest);
-            return Ok("İşlem Başarılı");
+            return Ok(ApiResponse<OfferDTOResponse>.SuccesWithOutData());
 
         }
 

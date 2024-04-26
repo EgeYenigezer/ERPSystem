@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration.Annotations;
 using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.RequestValidator;
 using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.RequestDTO;
 using ERPSystem.Entity.Entities;
@@ -23,6 +25,7 @@ namespace ERPSystem.Business.Concrete
             _uow = uow;
         }
 
+        [ValidationFilter(typeof(RequestValidation))]
         public async Task<RequestDTOResponse> AddAsync(RequestDTORequest RequestEntity)
         {
             if(RequestEntity.ApproverId == 0)
@@ -43,7 +46,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<RequestDTOResponse>> GetAllAsync(RequestDTORequest RequestEntity)
+        public async Task<List<RequestDTOResponse>> GetAllAsync(RequestDTORequest RequestEntity)
         {
             List<RequestDTOResponse> requestDTOResponses = new();
             if (RequestEntity.StatusId!=0)
@@ -99,6 +102,7 @@ namespace ERPSystem.Business.Concrete
 
         }
 
+        [ValidationFilter(typeof(RequestValidation))]
         public async Task UpdateAsync(RequestDTORequest RequestEntity)
         {
 

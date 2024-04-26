@@ -45,7 +45,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<InvoiceDTOResponse>> GetAllAsync(InvoiceDTORequest RequestEntity)
+        public async Task<List<InvoiceDTOResponse>> GetAllAsync(InvoiceDTORequest RequestEntity)
         {
             List<InvoiceDTOResponse> invoiceDTOResponses = new();
 
@@ -119,7 +119,7 @@ namespace ERPSystem.Business.Concrete
 
         }
 
-        public async Task<IEnumerable<InvoiceDTOResponse>> GetAllAsyncByDate(string date)
+        public async Task<List<InvoiceDTOResponse>> GetAllAsyncByDate(string date)
         {
             string[] dates = date.Split('-');
             DateTime startDate = Convert.ToDateTime(dates[0]);

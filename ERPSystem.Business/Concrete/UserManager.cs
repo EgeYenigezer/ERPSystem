@@ -41,31 +41,30 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<UserDTOResponse>> GetAllAsync(UserDTORequest RequestEntity)
+        public async Task<List<UserDTOResponse>> GetAllAsync(UserDTORequest RequestEntity)
         {
             List<UserDTOResponse> userDTOResponses = new();
-            if (RequestEntity != null)
-            {
-                if (RequestEntity.DepartmentId !=null)
-                {
-                    var filterUser = _mapper.Map<User>(RequestEntity);
-                    var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.DepartmentId==filterUser.DepartmentId,"Department");
 
-                    foreach (var user in departmentFilterUsers)
-                    {
-                        userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
-                    }
-                    
+            if (RequestEntity.DepartmentId > 0)
+            {
+                var filterUser = _mapper.Map<User>(RequestEntity);
+                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.DepartmentId == filterUser.DepartmentId, "Department");
+
+                foreach (var user in departmentFilterUsers)
+                {
+                    userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
                 }
+
             }
+
             else
             {
-                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x=>x.IsActive==true, "Department");
+                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.IsActive == true, "Department");
                 foreach (var user in noFilterUsers)
                 {
                     userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
                 }
-                
+
             }
 
             return userDTOResponses;
@@ -74,23 +73,23 @@ namespace ERPSystem.Business.Concrete
         public async Task<UserDTOResponse> GetAsync(UserDTORequest RequestEntity)
         {
             var user = _mapper.Map<User>(RequestEntity);
-            var dbUser = await _uow.UserRepository.GetAsync(x=>x.Id==user.Id && x.IsActive==true, "Department");
+            var dbUser = await _uow.UserRepository.GetAsync(x => x.Id == user.Id && x.IsActive == true, "Department");
 
-            UserDTOResponse userDTOResponse =_mapper.Map<UserDTOResponse>(dbUser);
+            UserDTOResponse userDTOResponse = _mapper.Map<UserDTOResponse>(dbUser);
             return userDTOResponse;
         }
 
         public async Task UpdateAsync(UserDTORequest RequestEntity)
         {
-            var user = await _uow.UserRepository.GetAsync(x=>x.Id == RequestEntity.Id);
-            user = _mapper.Map(RequestEntity,user);
+            var user = await _uow.UserRepository.GetAsync(x => x.Id == RequestEntity.Id);
+            user = _mapper.Map(RequestEntity, user);
             await _uow.UserRepository.UpdateAsync(user);
             await _uow.SaveChangeAsync();
         }
 
         public async Task<LoginDTOResponse> LoginAsync(LoginDTORequest RequestEntity)
         {
-            var user = await _uow.UserRepository.GetAsync(x=>x.Email == RequestEntity.Name && x.Password == RequestEntity.Password,"Department.Company","UserRoles.Role");
+            var user = await _uow.UserRepository.GetAsync(x => x.Email == RequestEntity.Name && x.Password == RequestEntity.Password, "Department.Company", "UserRoles.Role");
             var userResponse = _mapper.Map<LoginDTOResponse>(user);
             return userResponse;
         }

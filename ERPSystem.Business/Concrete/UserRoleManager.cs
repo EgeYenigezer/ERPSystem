@@ -39,7 +39,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<UserRoleDTOResponse>> GetAllAsync(UserRoleDTORequest RequestEntity)
+        public async Task<List<UserRoleDTOResponse>> GetAllAsync(UserRoleDTORequest RequestEntity)
         {
             List<UserRoleDTOResponse> userRoleDTOResponses = new();
 

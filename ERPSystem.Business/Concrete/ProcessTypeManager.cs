@@ -39,7 +39,7 @@ namespace ERPSystem.Business.Concrete
 
         }
 
-        public async Task<IEnumerable<ProcessTypeDTOResponse>> GetAllAsync(ProcessTypeDTORequest RequestEntity)
+        public async Task<List<ProcessTypeDTOResponse>> GetAllAsync(ProcessTypeDTORequest RequestEntity)
         {
             var processType = _mapper.Map<ProcessType>(RequestEntity);
             var processTypes = await _uow.ProcessTypeRepository.GetAllAsync();

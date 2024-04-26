@@ -1,7 +1,11 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.CategoryValidator;
 using ERPSystem.Entity.DTO.CategoryDTO;
 using ERPSystem.Entity.DTO.CompanyDTO;
 using ERPSystem.Entity.DTO.DepartmentDTO;
+using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,36 +26,39 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(CategoryDTORequest categoryDTORequest)
         {
             var categories = await _categoryService.GetAllAsync(categoryDTORequest);
-            return Ok(categories);
+            return Ok(ApiResponse<List<CategoryDTOResponse>>.SuccesWithData(categories));
         }
 
         [HttpPost("/Category")]
         public async Task<IActionResult> GetAsync(CategoryDTORequest categoryDTORequest)
         {
             var category = await _categoryService.GetAsync(categoryDTORequest);
-            return Ok(category);
+            return Ok(ApiResponse<CategoryDTOResponse>.SuccesWithData(category));
         }
 
 
         [HttpPost("/AddCategory")]
+        [ValidationFilter(typeof(CategoryValidation))]
         public async Task<IActionResult> AddAsync(CategoryDTORequest categoryDTORequest)
         {
             var category = await _categoryService.AddAsync(categoryDTORequest);
-            return Ok($"Yeni Bir Kategori Eklendi  Name: {category.Name} Id: {category.Id}");
+            return Ok(ApiResponse<CategoryDTOResponse>.SuccesWithData(category));
         }
 
+
         [HttpPost("/UpdateCategory")]
+        [ValidationFilter(typeof(CategoryValidation))]
         public async Task<IActionResult> UpdateAsync(CategoryDTORequest categoryDTORequest)
         {
             await _categoryService.UpdateAsync(categoryDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<CategoryDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteCategory")]
         public async Task<IActionResult> DeleteAsync(CategoryDTORequest categoryDTORequest)
         {
             await _categoryService.DeleteAsync(categoryDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<CategoryDTOResponse>.SuccesWithOutData());
         }
     }
 }

@@ -47,7 +47,7 @@ namespace ERPSystem.Business.Concrete
 
         }
 
-        public async Task<IEnumerable<OfferDTOResponse>> GetAllAsync(OfferDTORequest RequestEntity)
+        public async Task<List<OfferDTOResponse>> GetAllAsync(OfferDTORequest RequestEntity)
         {
             if (!(RequestEntity.SupplierName.Contains("string")))
             {

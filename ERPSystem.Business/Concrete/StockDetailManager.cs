@@ -39,7 +39,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<StockDetailDTOResponse>> GetAllAsync(StockDetailDTORequest RequestEntity)
+        public async Task<List<StockDetailDTOResponse>> GetAllAsync(StockDetailDTORequest RequestEntity)
         {
             if (RequestEntity.StockId!=null)
             {

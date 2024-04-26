@@ -38,7 +38,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<CompanyDTOResponse>> GetAllAsync(CompanyDTORequest RequestEntity)
+        public async Task<List<CompanyDTOResponse>> GetAllAsync(CompanyDTORequest RequestEntity)
         {
             var company = _mapper.Map<Company>(RequestEntity); /*Filtreleme yapmak istersek kullanbiliriz */
 

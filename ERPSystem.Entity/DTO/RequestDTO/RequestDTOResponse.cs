@@ -13,10 +13,15 @@ namespace ERPSystem.Entity.DTO.RequestDTO
         public string Title { get; set; }
         public string Description { get; set; }
         public decimal Quantity { get; set; }
+        public Int64 ProductId { get; set; }
         public string ProductName { get; set; }
+        public Int64 UnitId { get; set; }
         public string UnitName { get; set; }
+        public Int64 RequesterId { get; set; }
         public string RequesterName { get; set; }
+        public Int64? ApproverId { get; set; }
         public string ApproverName { get; set; }
+        public Int64 StatusId { get; set; }
         public string StatusName { get; set; }
     }
 }

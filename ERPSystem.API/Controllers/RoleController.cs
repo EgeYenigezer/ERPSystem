@@ -1,6 +1,10 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.RoleValidator;
 using ERPSystem.Entity.DTO.RequestDTO;
 using ERPSystem.Entity.DTO.RoleDTO;
+using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,35 +25,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(RoleDTORequest roleDTORequest)
         {
             var roles = await _roleService.GetAllAsync(roleDTORequest);
-            return Ok(roles);
+            return Ok(ApiResponse<List<RoleDTOResponse>>.SuccesWithData(roles));
         }
 
         [HttpPost("/Role")]
         public async Task<IActionResult> GetAsync(RoleDTORequest roleDTORequest)
         {
             var role = await _roleService.GetAsync(roleDTORequest);
-            return Ok(role);
+            return Ok(ApiResponse<RoleDTOResponse>.SuccesWithData(role));
         }
 
         [HttpPost("/AddRole")]
+        [ValidationFilter(typeof(RoleValidation))]
         public async Task<IActionResult> AddAsync(RoleDTORequest roleDTORequest)
         {
             var addedRole = await _roleService.AddAsync(roleDTORequest);
-            return Ok($"Yeni Bir Rol Eklendi =>\n\r Name: {addedRole.Name} Id: {addedRole.Id}");
+            return Ok(ApiResponse<RoleDTOResponse>.SuccesWithData(addedRole));
         }
 
         [HttpPost("/UpdateRole")]
+        [ValidationFilter(typeof(RoleValidation))]
         public async Task<IActionResult> UpdateAsync(RoleDTORequest roleDTORequest)
         {
             await _roleService.UpdateAsync(roleDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<RoleDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteRole")]
         public async Task<IActionResult> DeleteAsync(RoleDTORequest roleDTORequest)
         {
             await _roleService.DeleteAsync(roleDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<RoleDTOResponse>.SuccesWithOutData());
         }
     }
 }

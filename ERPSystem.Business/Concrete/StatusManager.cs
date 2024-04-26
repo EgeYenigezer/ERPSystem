@@ -39,7 +39,7 @@ namespace ERPSystem.Business.Concrete
             await _uow.SaveChangeAsync();
         }
 
-        public async Task<IEnumerable<StatusDTOResponse>> GetAllAsync(StatusDTORequest RequestEntity)
+        public async Task<List<StatusDTOResponse>> GetAllAsync(StatusDTORequest RequestEntity)
         {
             var dbStatuses =  await _uow.StatusRepository.GetAllAsync();
             List<StatusDTOResponse> statusDTOResponses = new();

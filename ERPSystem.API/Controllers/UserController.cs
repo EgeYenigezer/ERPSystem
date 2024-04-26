@@ -1,6 +1,11 @@
 ﻿using ERPSystem.Business.Abstract;
+using ERPSystem.Business.Utilities.Attributes;
+using ERPSystem.Business.Utilities.Validation.UnitValidator;
+using ERPSystem.Business.Utilities.Validation.UserValidator;
 using ERPSystem.Entity.DTO.UnitDTO;
 using ERPSystem.Entity.DTO.UserDTO;
+using ERPSystem.Entity.Entities;
+using ERPSystem.Entity.Result;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,35 +26,37 @@ namespace ERPSystem.API.Controllers
         public async Task<IActionResult> GetAllAsync(UserDTORequest userDTORequest)
         {
             var users = await _userService.GetAllAsync(userDTORequest);
-            return Ok(users);
+            return Ok(ApiResponse<List<UserDTOResponse>>.SuccesWithData(users));
         }
 
         [HttpPost("/User")]
         public async Task<IActionResult> GetAsync(UserDTORequest userDTORequest)
         {
             var user = await _userService.GetAsync(userDTORequest);
-            return Ok(user);
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithData(user));
         }
 
         [HttpPost("/AddUser")]
+        [ValidationFilter(typeof(UserValidation))]
         public async Task<IActionResult> AddAsync(UserDTORequest userDTORequest)
         {
             var addedUser = await _userService.AddAsync(userDTORequest);
-            return Ok($"Yeni Bir Kullanıcı Eklendi =>\n\r Name: {addedUser.Name} Id: {addedUser.Id}");
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithData(addedUser));
         }
 
         [HttpPost("/UpdateUser")]
+        [ValidationFilter(typeof(UserValidation))]
         public async Task<IActionResult> UpdateAsync(UserDTORequest userDTORequest)
         {
             await _userService.UpdateAsync(userDTORequest);
-            return Ok("İşlem Sanırım Başarılı!!");
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithOutData());
         }
 
         [HttpPost("/DeleteUser")]
         public async Task<IActionResult> DeleteAsync(UserDTORequest userDTORequest)
         {
             await _userService.DeleteAsync(userDTORequest);
-            return Ok("İşlem Başarılı!!");
+            return Ok(ApiResponse<UserDTOResponse>.SuccesWithOutData());
         }
     }
 }

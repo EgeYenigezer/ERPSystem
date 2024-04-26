@@ -40,7 +40,7 @@ namespace ERPSystem.Business.Concrete
 
         }
 
-        public async Task<IEnumerable<RoleDTOResponse>> GetAllAsync(RoleDTORequest RequestEntity)
+        public async Task<List<RoleDTOResponse>> GetAllAsync(RoleDTORequest RequestEntity)
         {
             var role = _mapper.Map<Role>(RequestEntity);
 
