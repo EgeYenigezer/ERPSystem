@@ -26,7 +26,7 @@ namespace ERPSystem.Business.DTOMapper.LoginMapper
                 {
                     opt.MapFrom(src => src.Department.Name);
                 }).
-                ForMember(dest => dest.EMail, opt =>
+                ForMember(dest => dest.Email, opt =>
                 {
                     opt.MapFrom(src => src.Email);
                 }).

@@ -13,9 +13,9 @@ namespace ERPSystem.Business.DTOMapper.LoginMapper
     {
         public LoginDTORequestMapper()
         {
-            CreateMap<User, LoginDTORequest>().ForMember(dest => dest.Name, opt =>
+            CreateMap<User, LoginDTORequest>().ForMember(dest => dest.Email, opt =>
             {
-                opt.MapFrom(src => src.Name);
+                opt.MapFrom(src => src.Email);
             }).
             ForMember(dest => dest.Password, opt =>
             {

@@ -49,11 +49,11 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<List<OfferDTOResponse>> GetAllAsync(OfferDTORequest RequestEntity)
         {
-            if (!(RequestEntity.SupplierName.Contains("string")))
+            if (RequestEntity.RequestId>0)
             {
                 var offer = _mapper.Map<Offer>(RequestEntity);
 
-                var dbOffers = await _uow.OfferRepository.GetAllAsync(x=>x.SupplierName.Contains($"{RequestEntity.SupplierName}"),"Status", "Request", "ApproverOfferUser");
+                var dbOffers = await _uow.OfferRepository.GetAllAsync(x=>x.RequestId==RequestEntity.RequestId,"Status", "Request", "ApproverOfferUser");
 
                 List<OfferDTOResponse> offerDTOResponses = new();
 

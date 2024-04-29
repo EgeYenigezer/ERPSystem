@@ -8,8 +8,8 @@ namespace ERPSystem.Entity.DTO.LoginDTO
 {
     public class LoginDTOResponse
     {
+        public string Email { get; set; }
         public string Name { get; set; }
-        public string EMail { get; set; }
         public string Password { get; set; }
 
         public string Token { get; set; }

@@ -89,7 +89,7 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<LoginDTOResponse> LoginAsync(LoginDTORequest RequestEntity)
         {
-            var user = await _uow.UserRepository.GetAsync(x => x.Email == RequestEntity.Name && x.Password == RequestEntity.Password, "Department.Company", "UserRoles.Role");
+            var user = await _uow.UserRepository.GetAsync(x => x.Email == RequestEntity.Email && x.Password == RequestEntity.Password, "Department.Company", "UserRoles.Role");
             var userResponse = _mapper.Map<LoginDTOResponse>(user);
             return userResponse;
         }

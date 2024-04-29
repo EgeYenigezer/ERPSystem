@@ -30,16 +30,14 @@ namespace ERPSystem.API.Controllers
             _userRoleService = userRoleService;
         }
 
-        [HttpPost("/Login")]
+        [HttpPost("/LoginAsync")]
         public async Task<IActionResult> LoginAsync(LoginDTORequest loginDTORequest)
         {
-
-
             var user = await _userService.LoginAsync(loginDTORequest);
 
             if (user == null)
             {
-                return Ok();
+                return Ok(ApiResponse<LoginDTOResponse>.SuccesNoDataFound("Kullanıcı Adı veya Şifre Hatalı, Tekrar Deneyiniz!"));
             }
 
 
@@ -48,7 +46,7 @@ namespace ERPSystem.API.Controllers
                 List<Claim> claims = new List<Claim>()
                 {
                 new Claim(ClaimTypes.Name , user.Name),
-                new Claim(ClaimTypes.Email , user.EMail),
+                new Claim(ClaimTypes.Email , user.Email),
                 };
 
                 foreach (var item in user.RoleName)
@@ -80,7 +78,7 @@ namespace ERPSystem.API.Controllers
             }
 
 
-            return Ok(ApiResponse<LoginDTOResponse>.SuccesNoDataFound());
+            
         }
     }
 }
