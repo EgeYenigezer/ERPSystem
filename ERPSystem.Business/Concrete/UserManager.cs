@@ -48,7 +48,7 @@ namespace ERPSystem.Business.Concrete
             if (RequestEntity.DepartmentId > 0)
             {
                 var filterUser = _mapper.Map<User>(RequestEntity);
-                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.DepartmentId == filterUser.DepartmentId, "Department");
+                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.DepartmentId == filterUser.DepartmentId, "Department.Company");
 
                 foreach (var user in departmentFilterUsers)
                 {
@@ -56,10 +56,21 @@ namespace ERPSystem.Business.Concrete
                 }
 
             }
+            else if (RequestEntity.Id > 0)
+            {
+                var filterUser = _mapper.Map<User>(RequestEntity);
+                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.Id == filterUser.Id, "Department.Company");
+
+                foreach (var user in departmentFilterUsers)
+                {
+                    userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
+                }
+            }
+            
 
             else
             {
-                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.IsActive == true, "Department");
+                var noFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.IsActive == true, "Department.Company");
                 foreach (var user in noFilterUsers)
                 {
                     userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
@@ -73,7 +84,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<UserDTOResponse> GetAsync(UserDTORequest RequestEntity)
         {
             var user = _mapper.Map<User>(RequestEntity);
-            var dbUser = await _uow.UserRepository.GetAsync(x => x.Id == user.Id && x.IsActive == true, "Department");
+            var dbUser = await _uow.UserRepository.GetAsync(x => x.Id == user.Id && x.IsActive == true, "Department.Company");
 
             UserDTOResponse userDTOResponse = _mapper.Map<UserDTOResponse>(dbUser);
             return userDTOResponse;

@@ -81,9 +81,9 @@ namespace ERPSystem.Business.Concrete
             {
                 var dbRequests = await _uow.RequestRepository.GetAllAsync(x=>true,"RequesterUser","ApproverUser", "Status", "Product", "Unit");
 
-                
+                var descList = dbRequests.OrderByDescending(x=>x.Id);
 
-                foreach (var dbRequest in dbRequests)
+                foreach (var dbRequest in descList)
                 {
                     requestDTOResponses.Add(_mapper.Map<RequestDTOResponse>(dbRequest));
                 }
