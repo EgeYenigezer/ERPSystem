@@ -96,6 +96,7 @@ namespace ERPSystem.Business.Concrete
             {
                 RequestEntity.ApproverUserId = null;
             }
+
             var offer = await _uow.OfferRepository.GetAsync(x=>x.Id==RequestEntity.Id);
             offer = _mapper.Map(RequestEntity, offer);
             await _uow.OfferRepository.UpdateAsync(offer);
