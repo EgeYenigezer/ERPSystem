@@ -21,6 +21,7 @@ namespace ERPSystem.Entity.DTO.StockDetailDTO
         public string DelivererName { get; set; }
         public DateTime AddedTime { get; set; }
         public string ProductName { get; set; }
+        public string ProductDescription { get; set; }
         public string StockDetailImage { get; set; }
 
 

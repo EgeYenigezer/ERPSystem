@@ -19,5 +19,6 @@ namespace ERPSystem.Entity.DTO.LoginDTO
         public Int64 DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public string CompanyName { get; set; }
+        public string UserImage { get; set; }
     }
 }

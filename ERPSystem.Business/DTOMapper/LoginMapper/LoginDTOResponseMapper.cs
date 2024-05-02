@@ -49,6 +49,10 @@ namespace ERPSystem.Business.DTOMapper.LoginMapper
                 ForMember(dest => dest.RoleName, opt =>
                 {
                     opt.MapFrom(src => src.UserRoles.Select(x => x.Role.Name).ToList());//*****
+                }).
+                ForMember(dest => dest.UserImage, opt =>
+                {
+                    opt.MapFrom(src=>src.Image);
                 }).ReverseMap();
         }
     }

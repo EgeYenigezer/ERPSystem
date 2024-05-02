@@ -36,6 +36,10 @@ namespace ERPSystem.Business.DTOMapper.StockDetailMapper
             ForMember(dest => dest.StockDetailImage, opt =>
             {
                 opt.MapFrom(src=>src.Stock.Product.Image);
+            })
+            .ForMember(dest => dest.ProductDescription, opt =>
+            {
+                opt.MapFrom(src=>src.Stock.Product.Description);
             }).ReverseMap();
         }
     }
