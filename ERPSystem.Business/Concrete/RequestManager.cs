@@ -77,6 +77,19 @@ namespace ERPSystem.Business.Concrete
                 }
                 
             }
+            else if (RequestEntity.ApproverId != 0)
+            {
+                var request = _mapper.Map<Request>(RequestEntity);
+
+                var dbRequests = await _uow.RequestRepository.GetAllAsync(x => x.ApproverId == request.ApproverId, "RequesterUser", "ApproverUser", "Status", "Product", "Unit");
+
+
+
+                foreach (var dbRequest in dbRequests)
+                {
+                    requestDTOResponses.Add(_mapper.Map<RequestDTOResponse>(dbRequest));
+                }
+            }
             else
             {
                 var dbRequests = await _uow.RequestRepository.GetAllAsync(x=>true,"RequesterUser","ApproverUser", "Status", "Product", "Unit");

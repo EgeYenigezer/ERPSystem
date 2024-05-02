@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240422133206_migE")]
+    [Migration("20240502101649_migE")]
     partial class migE
     {
         /// <inheritdoc />
@@ -69,7 +69,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Sirket", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Department", b =>
@@ -98,7 +98,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Departman", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Invoice", b =>
@@ -141,7 +141,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Invoice", (string)null);
+                    b.ToTable("Fatura", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Offer", b =>
@@ -188,7 +188,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Offer", (string)null);
+                    b.ToTable("Teklif", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.ProcessType", b =>
@@ -212,7 +212,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProcessType", (string)null);
+                    b.ToTable("IslemTuru", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Product", b =>
@@ -239,6 +239,10 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -251,7 +255,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Urun", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Request", b =>
@@ -293,8 +297,7 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<long?>("UnitId")
-                        .IsRequired()
+                    b.Property<long>("UnitId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -309,7 +312,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Request", (string)null);
+                    b.ToTable("Istek", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Role", b =>
@@ -333,7 +336,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role", (string)null);
+                    b.ToTable("Rol", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Status", b =>
@@ -357,7 +360,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Status", (string)null);
+                    b.ToTable("Durum", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Stock", b =>
@@ -394,7 +397,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.ToTable("Stock", (string)null);
+                    b.ToTable("Stok", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.StockDetail", b =>
@@ -436,7 +439,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("StockId");
 
-                    b.ToTable("StockDetail", (string)null);
+                    b.ToTable("StokDetay", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Unit", b =>
@@ -460,7 +463,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Unit", (string)null);
+                    b.ToTable("Birim", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.User", b =>
@@ -508,7 +511,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Kullanıcı", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.UserRole", b =>
@@ -537,7 +540,7 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole", (string)null);
+                    b.ToTable("KullanıcıRol", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Department", b =>
@@ -553,11 +556,10 @@ namespace ERPSystem.DataAccess.Migrations
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Offer", b =>
                 {
-                    b.HasOne("ERPSystem.Entity.Entities.User", "ApproverUser")
-                        .WithMany("Offers")
+                    b.HasOne("ERPSystem.Entity.Entities.User", "ApproverOfferUser")
+                        .WithMany("ApproverOfferUsers")
                         .HasForeignKey("ApproverUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ERPSystem.Entity.Entities.Request", "Request")
                         .WithMany("Offers")
@@ -571,7 +573,7 @@ namespace ERPSystem.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("ApproverUser");
+                    b.Navigation("ApproverOfferUser");
 
                     b.Navigation("Request");
 
@@ -783,11 +785,11 @@ namespace ERPSystem.DataAccess.Migrations
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.User", b =>
                 {
+                    b.Navigation("ApproverOfferUsers");
+
                     b.Navigation("ApproverUsers");
 
                     b.Navigation("DelivererStockDetails");
-
-                    b.Navigation("Offers");
 
                     b.Navigation("RecieverStockDetails");
 

@@ -42,16 +42,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Company>(entity =>
             {
 
-                entity.ToTable("Company");
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-                entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
-            });
-            modelBuilder.Entity<Company>(entity =>
-            {
-
-                entity.ToTable("Company");
+                entity.ToTable("Sirket");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -61,7 +52,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Department>(entity =>
             {
 
-                entity.ToTable("Department");
+                entity.ToTable("Departman");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -73,7 +64,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Invoice>(entity =>
             {
 
-                entity.ToTable("Invoice");
+                entity.ToTable("Fatura");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -88,7 +79,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Offer>(entity =>
             {
 
-                entity.ToTable("Offer");
+                entity.ToTable("Teklif");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -105,7 +96,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<ProcessType>(entity =>
             {
 
-                entity.ToTable("ProcessType");
+                entity.ToTable("IslemTuru");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -115,7 +106,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Product>(entity =>
             {
 
-                entity.ToTable("Product");
+                entity.ToTable("Urun");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -130,7 +121,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Request>(entity =>
             {
 
-                entity.ToTable("Request");
+                entity.ToTable("Istek");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -152,7 +143,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Role>(entity =>
             {
 
-                entity.ToTable("Role");
+                entity.ToTable("Rol");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -164,7 +155,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Status>(entity =>
             {
 
-                entity.ToTable("Status");
+                entity.ToTable("Durum");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -176,7 +167,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Stock>(entity =>
             {
 
-                entity.ToTable("Stock");
+                entity.ToTable("Stok");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -195,7 +186,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<StockDetail>(entity =>
             {
 
-                entity.ToTable("StockDetail");
+                entity.ToTable("StokDetay");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -215,7 +206,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<Unit>(entity =>
             {
 
-                entity.ToTable("Unit");
+                entity.ToTable("Birim");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -226,7 +217,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<User>(entity =>
             {
 
-                entity.ToTable("User");
+                entity.ToTable("Kullanıcı");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -243,7 +234,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
             modelBuilder.Entity<UserRole>(entity =>
             {
 
-                entity.ToTable("UserRole");
+                entity.ToTable("KullanıcıRol");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");

@@ -117,6 +117,10 @@ namespace ERPSystem.Business.Concrete
             {
                 RequestEntity.CategoryId = product.CategoryId;
             }
+            if (RequestEntity.Image == "string")
+            {
+                RequestEntity.Image = product.Image;
+            }
             product = _mapper.Map(RequestEntity,product);
             await _uow.ProductRepository.UpdateAsync(product);
             await _uow.SaveChangeAsync();

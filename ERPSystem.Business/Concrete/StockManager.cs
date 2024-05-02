@@ -4,6 +4,7 @@ using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.StockDTO;
 using ERPSystem.Entity.Entities;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<List<StockDTOResponse>> GetAllAsync(StockDTORequest RequestEntity)
         {
-            if (RequestEntity.ProductId!=null)
+            if (RequestEntity.ProductId!=0)
             {
                 var stock = _mapper.Map<Stock>(RequestEntity);
                 var dbStocks =await _uow.StockRepository.GetAllAsync(x=>x.ProductId==stock.ProductId,"Product","Unit","Department");
@@ -52,10 +53,10 @@ namespace ERPSystem.Business.Concrete
                 }
                 return stockDTOResponses;
             }
-            else if (RequestEntity.DepartmentId!=null)
+            else if (RequestEntity.DepartmentId>0)
             {
                 var stock = _mapper.Map<Stock>(RequestEntity);
-                var dbStocks = await _uow.StockRepository.GetAllAsync(x => x.DepartmentId == stock.DepartmentId, "Product", "Unit", "Department");
+                var dbStocks = await _uow.StockRepository.GetAllAsync(x => x.Department.CompanyId == stock.DepartmentId, "Product", "Unit", "Department.Company");
 
                 List<StockDTOResponse> stockDTOResponses = new();
                 foreach (var dbStock in dbStocks)
@@ -66,7 +67,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var dbStocks = await _uow.StockRepository.GetAllAsync();
+                var dbStocks = await _uow.StockRepository.GetAllAsync(x => true, "Product", "Unit", "Department");
 
                 List<StockDTOResponse> stockDTOResponses = new();
                 foreach (var dbStock in dbStocks)

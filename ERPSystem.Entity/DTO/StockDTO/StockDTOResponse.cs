@@ -14,5 +14,6 @@ namespace ERPSystem.Entity.DTO.StockDTO
         public string ProductName { get; set; }
         public string UnitName { get; set; }
         public string DepartmentName { get; set; }
+        public string ProductImage { get; set; }
     }
 }

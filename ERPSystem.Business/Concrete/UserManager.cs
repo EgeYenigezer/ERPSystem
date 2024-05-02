@@ -93,6 +93,11 @@ namespace ERPSystem.Business.Concrete
         public async Task UpdateAsync(UserDTORequest RequestEntity)
         {
             var user = await _uow.UserRepository.GetAsync(x => x.Id == RequestEntity.Id);
+            //eğer güncellemede fotoğrafını değiştirmediyse eskisini koy.
+            if (RequestEntity.Image == "string")
+            {
+                RequestEntity.Image = user.Image;
+            }
             user = _mapper.Map(RequestEntity, user);
             await _uow.UserRepository.UpdateAsync(user);
             await _uow.SaveChangeAsync();

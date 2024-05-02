@@ -14,7 +14,7 @@ namespace ERPSystem.Business.DTOMapper.StockMapper
         public StockRequestMapper()
         {
             CreateMap<Stock,StockDTORequest>();
-            CreateMap<Stock, Stock>();
+            CreateMap<StockDTORequest, Stock>();
         }
     }
 }
