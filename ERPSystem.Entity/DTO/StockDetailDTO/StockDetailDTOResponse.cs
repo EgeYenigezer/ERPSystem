@@ -23,6 +23,7 @@ namespace ERPSystem.Entity.DTO.StockDetailDTO
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public string StockDetailImage { get; set; }
+        public string StockDetailUnitName { get; set; }
 
 
     }

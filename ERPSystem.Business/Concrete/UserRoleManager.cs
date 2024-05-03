@@ -24,18 +24,32 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<UserRoleDTOResponse> AddAsync(UserRoleDTORequest RequestEntity)
         {
+            UserRoleDTOResponse userRoleDTOResponse = new();
             var userRole = _mapper.Map<UserRole>(RequestEntity);
-            var addedUserRole = await _uow.UserRoleRepository.AddAsync(userRole);
-            await _uow.SaveChangeAsync();
 
-            UserRoleDTOResponse userRoleDTOResponse = _mapper.Map<UserRoleDTOResponse>(addedUserRole.Entity);
+            var currentUserRole = await _uow.UserRoleRepository.GetAllAsync(x=>x.UserId==userRole.UserId&&x.RoleId==userRole.RoleId);
+
+            if (currentUserRole!=null)
+            {
+                return userRoleDTOResponse;
+            }
+            else 
+            {
+                var addedUserRole = await _uow.UserRoleRepository.AddAsync(userRole);
+                await _uow.SaveChangeAsync();
+                userRoleDTOResponse = _mapper.Map<UserRoleDTOResponse>(addedUserRole.Entity);
+            }
             return userRoleDTOResponse;
         }
 
         public async Task DeleteAsync(UserRoleDTORequest RequestEntity)
         {
             var userRole = _mapper.Map<UserRole>(RequestEntity);
-            await _uow.UserRoleRepository.RemoveAsync(userRole);
+
+            var currentUserRole = await _uow.UserRoleRepository.GetAsync(x=>x.RoleId==userRole.RoleId&&x.UserId==userRole.UserId);
+
+
+            await _uow.UserRoleRepository.RemoveAsync(currentUserRole);
             await _uow.SaveChangeAsync();
         }
 
@@ -43,22 +57,31 @@ namespace ERPSystem.Business.Concrete
         {
             List<UserRoleDTOResponse> userRoleDTOResponses = new();
 
-            if (RequestEntity != null)
+            if (RequestEntity.UserId!=0)
             {
-                if (RequestEntity.RoleId != null)
-                {
-                    var userRole = _mapper.Map<UserRole>(RequestEntity);
-                    var filterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.RoleId==userRole.RoleId && x.IsActive==true,"Role","User");
 
-                    foreach (var filterRoleUser in filterRoleUsers)
-                    {
-                        userRoleDTOResponses.Add(_mapper.Map<UserRoleDTOResponse>(filterRoleUser));
-                    }
+                var userRole = _mapper.Map<UserRole>(RequestEntity);
+                var filterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x => x.UserId == userRole.UserId && x.IsActive == true, "Role", "User");
+
+                foreach (var filterRoleUser in filterRoleUsers)
+                {
+                    userRoleDTOResponses.Add(_mapper.Map<UserRoleDTOResponse>(filterRoleUser));
+                }
+
+            }
+            else if(RequestEntity.RoleId!=0)
+            {
+                var userRole = _mapper.Map<UserRole>(RequestEntity);
+                var filterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x => x.RoleId == userRole.RoleId && x.IsActive == true, "Role", "User");
+
+                foreach (var filterRoleUser in filterRoleUsers)
+                {
+                    userRoleDTOResponses.Add(_mapper.Map<UserRoleDTOResponse>(filterRoleUser));
                 }
             }
             else
             {
-                var noFilterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x=>x.IsActive==true, "Role", "User");
+                var noFilterRoleUsers = await _uow.UserRoleRepository.GetAllAsync(x => x.IsActive == true, "Role", "User");
 
                 foreach (var noFilterRoleUser in noFilterRoleUsers)
                 {
@@ -72,7 +95,7 @@ namespace ERPSystem.Business.Concrete
         public async Task<UserRoleDTOResponse> GetAsync(UserRoleDTORequest RequestEntity)
         {
             var userRole = _mapper.Map<UserRole>(RequestEntity);
-            var dbUserRole = await _uow.UserRoleRepository.GetAsync(x=>x.Id==userRole.Id, "Role", "User");
+            var dbUserRole = await _uow.UserRoleRepository.GetAsync(x => x.Id == userRole.Id, "Role", "User");
 
             UserRoleDTOResponse userRoleDTOResponse = _mapper.Map<UserRoleDTOResponse>(dbUserRole);
             return userRoleDTOResponse;
@@ -80,8 +103,8 @@ namespace ERPSystem.Business.Concrete
 
         public async Task UpdateAsync(UserRoleDTORequest RequestEntity)
         {
-            var userRole = await _uow.UserRoleRepository.GetAsync(x=>x.Id == RequestEntity.Id);
-            userRole = _mapper.Map(RequestEntity,userRole);
+            var userRole = await _uow.UserRoleRepository.GetAsync(x => x.Id == RequestEntity.Id);
+            userRole = _mapper.Map(RequestEntity, userRole);
             await _uow.UserRoleRepository.UpdateAsync(userRole);
             await _uow.SaveChangeAsync();
         }
