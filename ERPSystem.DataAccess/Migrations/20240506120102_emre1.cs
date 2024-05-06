@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ERPSystem.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class migE : Migration
+    public partial class emre1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -113,6 +113,7 @@ namespace ERPSystem.DataAccess.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },

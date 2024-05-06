@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240502101649_migE")]
-    partial class migE
+    [Migration("20240506120102_emre1")]
+    partial class emre1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -58,6 +58,10 @@ namespace ERPSystem.DataAccess.Migrations
 
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

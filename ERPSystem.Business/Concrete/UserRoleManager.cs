@@ -29,7 +29,7 @@ namespace ERPSystem.Business.Concrete
 
             var currentUserRole = await _uow.UserRoleRepository.GetAllAsync(x=>x.UserId==userRole.UserId&&x.RoleId==userRole.RoleId);
 
-            if (currentUserRole!=null)
+            if (currentUserRole.Count() > 0)
             {
                 return userRoleDTOResponse;
             }

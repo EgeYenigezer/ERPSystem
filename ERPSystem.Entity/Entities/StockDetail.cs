@@ -14,9 +14,9 @@ namespace ERPSystem.Entity.Entities
         public Int64 StockId { get; set; }
         public ProcessType ProcessType { get; set; }
         public Int64 ProcessTypeId { get; set; }
-        public User Receiver { get; set; }
-        public Int64 ReceiverId { get; set; }
-        public User Deliverer { get; set; }
-        public Int64 DelivererId { get; set; }
+        public User? Receiver { get; set; }
+        public Int64? ReceiverId { get; set; }
+        public User? Deliverer { get; set; }
+        public Int64? DelivererId { get; set; }
     }
 }

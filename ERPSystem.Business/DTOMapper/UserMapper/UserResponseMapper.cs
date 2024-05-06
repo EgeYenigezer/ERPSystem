@@ -21,9 +21,9 @@ namespace ERPSystem.Business.DTOMapper.UserMapper
             {
                 opt.MapFrom(src=>src.Department.Company.Name);
             }).
-            ForMember(dest => dest.RoleName, opt =>
+            ForMember(dest => dest.Roles, opt =>
             {
-                opt.MapFrom(src => src.UserRoles.Select(x => x.Role.Name).ToList());//*****
+                opt.MapFrom(src => src.UserRoles.Select(x=>x.Role));//*****
             }).ReverseMap();
         }
     }

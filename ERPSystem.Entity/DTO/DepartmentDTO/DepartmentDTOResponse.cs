@@ -11,6 +11,7 @@ namespace ERPSystem.Entity.DTO.DepartmentDTO
     {
         public Int64 Id { get; set; }
         public string Name { get; set; }
+        public Int64 CompanyId { get; set; }
         public string CompanyName { get; set; }
     }
 }

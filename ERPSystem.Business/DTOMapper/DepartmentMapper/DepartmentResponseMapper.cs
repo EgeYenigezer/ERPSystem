@@ -9,14 +9,20 @@ using System.Threading.Tasks;
 
 namespace ERPSystem.Business.DTOMapper.DepartmentMapper
 {
-    public class DepartmentResponseMapper:Profile
+    public class DepartmentResponseMapper : Profile
     {
         public DepartmentResponseMapper()
         {
             CreateMap<Department, DepartmentDTOResponse>().ForMember(dest => dest.CompanyName, opt =>
             {
-                opt.MapFrom(src=>src.Company.Name);
+                opt.MapFrom(src => src.Company.Name);
+            })
+            .ForMember(dest => dest.CompanyId, opt =>
+            {
+                opt.MapFrom(x => x.Company.Id);
             }).ReverseMap();
+
+                
         }
     }
 }

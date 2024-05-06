@@ -10,6 +10,7 @@ namespace ERPSystem.Entity.Entities
     public class Company:BaseEntity
     {
         public string Name { get; set; }
+        public string? Image { get; set; }
         public IEnumerable<Department> Departments { get; set; }
     }
 }

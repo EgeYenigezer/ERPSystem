@@ -69,7 +69,10 @@ namespace ERPSystem.Business.Concrete
         public async Task UpdateAsync(CompanyDTORequest RequestEntity)
         {
             var company = await _uow.CompanyRepository.GetAsync(x=>x.Id==RequestEntity.Id);
-
+            if (RequestEntity.Image == "string")
+            {
+                RequestEntity.Image = company.Image;
+            }
             company = _mapper.Map(RequestEntity, company);
 
             await _uow.CompanyRepository.UpdateAsync(company);

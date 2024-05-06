@@ -13,7 +13,7 @@ namespace ERPSystem.Entity.Entities
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Password { get; set; }
-        public string Image { get; set; }
+        public string? Image { get; set; }
         public Department Department { get; set; }
         public Int64 DepartmentId { get; set; }
         public IEnumerable<UserRole> UserRoles { get; set; }

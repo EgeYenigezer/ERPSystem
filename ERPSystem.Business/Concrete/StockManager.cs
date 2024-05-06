@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ERPSystem.Business.Abstract;
 using ERPSystem.DataAccess.Abstract.DataManagement;
+using ERPSystem.Entity.DTO.StockDetailDTO;
 using ERPSystem.Entity.DTO.StockDTO;
 using ERPSystem.Entity.Entities;
 using System;
@@ -28,6 +29,16 @@ namespace ERPSystem.Business.Concrete
             var stock = _mapper.Map<Stock>(RequestEntity);
             var addedStock = await _uow.StockRepository.AddAsync(stock);
             await _uow.SaveChangeAsync();
+
+            // ilk girişte detay ekleme
+            StockDetail stockDetail = new();
+            stockDetail.StockId = addedStock.Entity.Id;
+            stockDetail.Quantity = addedStock.Entity.Quantity;
+            stockDetail.ProcessTypeId = 3;
+            await _uow.StockDetailRepository.AddAsync(stockDetail);
+            await _uow.SaveChangeAsync();
+
+
             StockDTOResponse stockDTOResponse = _mapper.Map<StockDTOResponse>(addedStock.Entity);
             return stockDTOResponse;
         }
@@ -35,6 +46,16 @@ namespace ERPSystem.Business.Concrete
         public async Task DeleteAsync(StockDTORequest RequestEntity)
         {
             var stock = _mapper.Map<Stock>(RequestEntity);
+
+            //stokla birlikte stok detay silme
+            var stockDetails = await _uow.StockDetailRepository.GetAllAsync(x=>x.StockId == RequestEntity.Id);
+            foreach (var item in stockDetails)
+            {
+                await _uow.StockDetailRepository.RemoveAsync(item);
+            }
+            await _uow.SaveChangeAsync();
+
+
             await _uow.StockRepository.RemoveAsync(stock);
             await _uow.SaveChangeAsync();
         }
