@@ -12,6 +12,8 @@ namespace ERPSystem.Entity.Entities
         public DateTime? InvoiceDate { get; set; } = null;
         public decimal TotalPrice { get; set; }
         public string SupplierName { get; set; }
+        public string SupplierPhone { get; set; }
+        public string SupplierAddress { get; set; }
         public string CompanyName { get; set; }
         public string ProductName { get; set; }
         public decimal Quantity { get; set; }

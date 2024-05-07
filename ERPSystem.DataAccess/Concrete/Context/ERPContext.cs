@@ -72,6 +72,8 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.TotalPrice).IsRequired();
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.SupplierName).HasMaxLength(50);
+                entity.Property(e => e.SupplierPhone).HasMaxLength(20);
+                entity.Property(e => e.SupplierAddress).HasMaxLength(150);
                 entity.Property(e => e.CompanyName).HasMaxLength(50);
                 entity.Property(e => e.ProductName).HasMaxLength(50);
             });
@@ -97,6 +99,16 @@ namespace ERPSystem.DataAccess.Concrete.Context
             {
 
                 entity.ToTable("IslemTuru");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.AddedTime).HasColumnType("datetime");
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+
+                entity.ToTable("Kategori");
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
@@ -191,6 +203,8 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e => e.DelivererId).IsRequired(false);
+                entity.Property(e => e.ReceiverId).IsRequired(false);
 
 
                 entity.HasOne(x => x.Stock).WithMany(x => x.StockDetails).HasForeignKey(x => x.StockId).OnDelete(DeleteBehavior.NoAction);

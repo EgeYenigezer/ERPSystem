@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240506120102_emre1")]
-    partial class emre1
+    [Migration("20240507102235_migE")]
+    partial class migE
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,18 +34,19 @@ namespace ERPSystem.DataAccess.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("AddedTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Kategori", (string)null);
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Company", b =>
@@ -60,7 +61,6 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -135,10 +135,20 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("SupplierAddress")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<string>("SupplierName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("SupplierPhone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -244,7 +254,6 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
@@ -415,7 +424,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<long>("DelivererId")
+                    b.Property<long?>("DelivererId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsActive")
@@ -427,7 +436,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("ReceiverId")
+                    b.Property<long?>("ReceiverId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("StockId")
@@ -669,8 +678,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.HasOne("ERPSystem.Entity.Entities.User", "Deliverer")
                         .WithMany("DelivererStockDetails")
                         .HasForeignKey("DelivererId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ERPSystem.Entity.Entities.ProcessType", "ProcessType")
                         .WithMany("StockDetails")
@@ -681,8 +689,7 @@ namespace ERPSystem.DataAccess.Migrations
                     b.HasOne("ERPSystem.Entity.Entities.User", "Receiver")
                         .WithMany("RecieverStockDetails")
                         .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("ERPSystem.Entity.Entities.Stock", "Stock")
                         .WithMany("StockDetails")

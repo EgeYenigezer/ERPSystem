@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ERPSystem.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class emre1 : Migration
+    public partial class migE : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,21 +24,6 @@ namespace ERPSystem.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Birim", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AddedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,6 +50,8 @@ namespace ERPSystem.DataAccess.Migrations
                     InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     SupplierName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SupplierPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    SupplierAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -92,6 +79,21 @@ namespace ERPSystem.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Kategori",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Kategori", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Rol",
                 columns: table => new
                 {
@@ -113,7 +115,7 @@ namespace ERPSystem.DataAccess.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -131,7 +133,7 @@ namespace ERPSystem.DataAccess.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     BrandName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<long>(type: "bigint", nullable: false),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -140,9 +142,9 @@ namespace ERPSystem.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Urun", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Urun_Category_CategoryId",
+                        name: "FK_Urun_Kategori_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Kategori",
                         principalColumn: "Id");
                 });
 
@@ -307,8 +309,8 @@ namespace ERPSystem.DataAccess.Migrations
                     Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     StockId = table.Column<long>(type: "bigint", nullable: false),
                     ProcessTypeId = table.Column<long>(type: "bigint", nullable: false),
-                    ReceiverId = table.Column<long>(type: "bigint", nullable: false),
-                    DelivererId = table.Column<long>(type: "bigint", nullable: false),
+                    ReceiverId = table.Column<long>(type: "bigint", nullable: true),
+                    DelivererId = table.Column<long>(type: "bigint", nullable: true),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -516,7 +518,7 @@ namespace ERPSystem.DataAccess.Migrations
                 name: "Departman");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Kategori");
 
             migrationBuilder.DropTable(
                 name: "Sirket");
