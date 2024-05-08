@@ -45,7 +45,7 @@ namespace ERPSystem.Business.Concrete
         {
             List<UserDTOResponse> userDTOResponses = new();
 
-            if (RequestEntity.DepartmentId > 0)
+            if (RequestEntity.DepartmentId != 0)
             {
                 var filterUser = _mapper.Map<User>(RequestEntity);
                 var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.DepartmentId == filterUser.DepartmentId, "Department.Company","UserRoles.Role");
@@ -56,15 +56,29 @@ namespace ERPSystem.Business.Concrete
                 }
 
             }
-            else if (RequestEntity.Id > 0)
+            else if (RequestEntity.Id != 0)
             {
                 var filterUser = _mapper.Map<User>(RequestEntity);
+                
                 var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.Id == filterUser.Id, "Department.Company", "UserRoles.Role");
 
                 foreach (var user in departmentFilterUsers)
                 {
                     userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
                 }
+            }
+            else if (RequestEntity.CompanyName!="string")
+            {
+                var filterUser = _mapper.Map<User>(RequestEntity);
+
+                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.Department.Company.Name == RequestEntity.CompanyName, "Department.Company", "UserRoles.Role");
+
+                foreach (var user in departmentFilterUsers)
+                {
+                    userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
+                }
+
+
             }
             
 

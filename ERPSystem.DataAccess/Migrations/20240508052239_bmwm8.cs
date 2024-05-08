@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ERPSystem.DataAccess.Migrations
 {
     /// <inheritdoc />
-    public partial class migE : Migration
+    public partial class bmwm8 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,28 +39,6 @@ namespace ERPSystem.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Durum", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Fatura",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    SupplierName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    SupplierPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    SupplierAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    CompanyName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    ProductName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fatura", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,6 +93,8 @@ namespace ERPSystem.DataAccess.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Mail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
@@ -164,6 +144,34 @@ namespace ERPSystem.DataAccess.Migrations
                     table.PrimaryKey("PK_Departman", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Departman_Sirket_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Sirket",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fatura",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CompanyId = table.Column<long>(type: "bigint", nullable: false),
+                    InvoiceDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    SupplierName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    SupplierPhone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    SupplierAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    SupplierMail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Quantity = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AddedTime = table.Column<DateTime>(type: "datetime", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fatura", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Fatura_Sirket_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Sirket",
                         principalColumn: "Id");
@@ -377,6 +385,11 @@ namespace ERPSystem.DataAccess.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Departman_CompanyId",
                 table: "Departman",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Fatura_CompanyId",
+                table: "Fatura",
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(

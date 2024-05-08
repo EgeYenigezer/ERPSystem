@@ -13,8 +13,18 @@ namespace ERPSystem.Business.DTOMapper.InvoiceMapper
     {
         public InvoiceResponseMapper()
         {
-            CreateMap<Invoice,InvoiceDTOResponse>();
-            CreateMap<InvoiceDTOResponse, Invoice>();
+            CreateMap<Invoice,InvoiceDTOResponse>().ForMember(dest=>dest.CompanyName , opt =>
+            {
+                opt.MapFrom(x => x.Company.Name);
+            }).
+            ForMember(dest=>dest.CompanyPhone , opt =>
+            {
+                opt.MapFrom(x=>x.Company.Phone);
+            }).
+            ForMember(dest=>dest.CompanyMail , opt =>
+            {
+                opt.MapFrom(src => src.Company.Mail);
+            }).ReverseMap();
         }
     }
 }

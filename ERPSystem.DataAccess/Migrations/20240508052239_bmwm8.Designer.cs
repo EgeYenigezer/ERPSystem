@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERPSystem.DataAccess.Migrations
 {
     [DbContext(typeof(ERPContext))]
-    [Migration("20240507102235_migE")]
-    partial class migE
+    [Migration("20240508052239_bmwm8")]
+    partial class bmwm8
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,18 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Mail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -116,16 +124,17 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Property<DateTime>("AddedTime")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<long>("CompanyId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime?>("InvoiceDate")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
@@ -140,6 +149,10 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("SupplierMail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SupplierName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -150,10 +163,9 @@ namespace ERPSystem.DataAccess.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
 
                     b.ToTable("Fatura", (string)null);
                 });
@@ -567,6 +579,17 @@ namespace ERPSystem.DataAccess.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("ERPSystem.Entity.Entities.Invoice", b =>
+                {
+                    b.HasOne("ERPSystem.Entity.Entities.Company", "Company")
+                        .WithMany("Invoices")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+                });
+
             modelBuilder.Entity("ERPSystem.Entity.Entities.Offer", b =>
                 {
                     b.HasOne("ERPSystem.Entity.Entities.User", "ApproverOfferUser")
@@ -744,6 +767,8 @@ namespace ERPSystem.DataAccess.Migrations
             modelBuilder.Entity("ERPSystem.Entity.Entities.Company", b =>
                 {
                     b.Navigation("Departments");
+
+                    b.Navigation("Invoices");
                 });
 
             modelBuilder.Entity("ERPSystem.Entity.Entities.Department", b =>

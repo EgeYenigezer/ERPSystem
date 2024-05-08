@@ -69,13 +69,13 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
-                entity.Property(e => e.TotalPrice).IsRequired();
+                entity.Property(e => e.Price).IsRequired();
                 entity.Property(e => e.Quantity).IsRequired();
                 entity.Property(e => e.SupplierName).HasMaxLength(50);
                 entity.Property(e => e.SupplierPhone).HasMaxLength(20);
                 entity.Property(e => e.SupplierAddress).HasMaxLength(150);
-                entity.Property(e => e.CompanyName).HasMaxLength(50);
                 entity.Property(e => e.ProductName).HasMaxLength(50);
+                entity.HasOne(x => x.Company).WithMany(x => x.Invoices).HasForeignKey(x => x.CompanyId).OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Offer>(entity =>

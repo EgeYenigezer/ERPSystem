@@ -26,9 +26,6 @@ namespace ERPSystem.Business.Concrete
         public async Task<StockDetailDTOResponse> AddAsync(StockDetailDTORequest RequestEntity)
         {
             var stockDetail = _mapper.Map<StockDetail>(RequestEntity);
-
-            var addedStockDetail = await _uow.StockDetailRepository.AddAsync(stockDetail);
-            await _uow.SaveChangeAsync();
             var stock = await _uow.StockRepository.GetAsync(x=>x.Id==stockDetail.StockId);
 
             if (RequestEntity.Quantity != 0 && RequestEntity.ProcessTypeId == 1)
@@ -37,11 +34,19 @@ namespace ERPSystem.Business.Concrete
             }
             else if (RequestEntity.Quantity != 0 && RequestEntity.ProcessTypeId == 2)
             {
+                var stockQuantity = stock.Quantity - RequestEntity.Quantity;
+                if (stockQuantity < 0)
+                {
+                    return new StockDetailDTOResponse();
+                }
                 stock.Quantity -= RequestEntity.Quantity;
             }
             await _uow.StockRepository.UpdateAsync(stock);
             await _uow.SaveChangeAsync();
-           
+
+            var addedStockDetail = await _uow.StockDetailRepository.AddAsync(stockDetail);
+            await _uow.SaveChangeAsync();
+
             StockDetailDTOResponse stockDetailDTOResponse = _mapper.Map<StockDetailDTOResponse>(addedStockDetail.Entity);
             return stockDetailDTOResponse;
         }

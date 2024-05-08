@@ -16,6 +16,7 @@ namespace ERPSystem.Entity.DTO.UserDTO
         public string Phone { get; set; }
         public string Password { get; set; }
         public string Image { get; set; }
+        public string CompanyName { get; set; }
         public Int64 DepartmentId { get; set; }
     }
 }

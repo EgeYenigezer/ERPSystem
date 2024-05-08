@@ -11,6 +11,7 @@ namespace ERPSystem.Entity.DTO.UserDTO
     public class UserDTOResponse:BaseResponseDTO
     {
         public Int64 Id { get; set; }
+        public Int64 DepartmentId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
