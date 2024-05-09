@@ -21,6 +21,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Invoice> Invoice { get; set; }
+        public virtual DbSet<InvoiceDetail> InvoiceDetail { get; set; }
         public virtual DbSet<Offer> Offer { get; set; }
         public virtual DbSet<ProcessType> ProcessType { get; set; }
         public virtual DbSet<Product> Product { get; set; }
@@ -46,7 +47,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(100);
             });
 
             modelBuilder.Entity<Department>(entity =>
@@ -56,7 +57,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(100);
 
                 entity.HasOne(x => x.Company).WithMany(x => x.Departments).HasForeignKey(x => x.CompanyId).OnDelete(DeleteBehavior.NoAction);
             });
@@ -69,13 +70,26 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.InvoiceDate).HasColumnType("datetime");
-                entity.Property(e => e.Price).IsRequired();
-                entity.Property(e => e.Quantity).IsRequired();
-                entity.Property(e => e.SupplierName).HasMaxLength(50);
+                entity.Property(e => e.InvoiceNo).IsRequired();
+                entity.Property(e => e.SupplierName).HasMaxLength(200);
                 entity.Property(e => e.SupplierPhone).HasMaxLength(20);
                 entity.Property(e => e.SupplierAddress).HasMaxLength(150);
-                entity.Property(e => e.ProductName).HasMaxLength(50);
                 entity.HasOne(x => x.Company).WithMany(x => x.Invoices).HasForeignKey(x => x.CompanyId).OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<InvoiceDetail>(entity =>
+            {
+
+                entity.ToTable("FaturaDetay");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.Property(e => e.AddedTime).HasColumnType("datetime");
+                entity.Property(e=>e.ProductName).HasMaxLength(500);
+                entity.Property(e=>e.ProductDescription).HasMaxLength(2000);
+                entity.Property(e => e.Quantity).IsRequired();
+                entity.Property(e=>e.UnitPrice).IsRequired();
+                entity.Property(e=>e.Sum).IsRequired();
+                entity.HasOne(e => e.Invoice).WithMany(e => e.InvoiceDetails).HasForeignKey(e => e.InvoiceId).OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<Offer>(entity =>
@@ -86,8 +100,8 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Price).IsRequired();
-                entity.Property(e => e.SupplierName).HasMaxLength(50);
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.SupplierName).HasMaxLength(500);
+                entity.Property(e => e.Description).HasMaxLength(2000);
                 entity.Property(e=>e.ApproverUserId).IsRequired(false);
                 
                 entity.HasOne(x => x.Status).WithMany(x => x.Offers).HasForeignKey(x => x.StatusId).OnDelete(DeleteBehavior.NoAction);
@@ -102,7 +116,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -112,7 +126,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -122,9 +136,9 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
-                entity.Property(e => e.BrandName).HasMaxLength(50);
-                entity.Property(e => e.Description).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.BrandName).HasMaxLength(100);
+                entity.Property(e => e.Description).HasMaxLength(2000);
 
                 entity.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x=>x.CategoryId).OnDelete(DeleteBehavior.NoAction);
 
@@ -138,7 +152,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Quantity).IsRequired();
-                entity.Property(e => e.Title).HasMaxLength(50);
+                entity.Property(e => e.Title).HasMaxLength(500);
                 entity.Property(e => e.Description).HasMaxLength(2000);
                 entity.Property(e => e.ApproverId).IsRequired(false);
 
@@ -159,8 +173,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
-
+                entity.Property(e => e.Name).HasMaxLength(100);
 
             });
 
@@ -171,7 +184,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(100);
 
 
             });
@@ -236,7 +249,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
                 entity.Property(e => e.AddedTime).HasColumnType("datetime");
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
-                entity.Property(e => e.Email).IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Phone).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Password).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Image).IsRequired();

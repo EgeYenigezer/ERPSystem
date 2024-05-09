@@ -23,6 +23,7 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
             CompanyRepository = new EfCompanyRepository(_context);
             DepartmentRepository = new EfDepartmentRepository(_context);
             InvoiceRepository = new EfInvoiceRepository(_context);
+            InvoiceDetailRepository = new EfInvoiceDetailRepository(_context);
             OfferRepository = new EfOfferRepository(_context);
             ProductRepository = new EfProductRepository(_context);
             RequestRepository = new EfRequestRepository(_context);
@@ -65,6 +66,8 @@ namespace ERPSystem.DataAccess.Concrete.DataManagement
 
         public IUnitRepository UnitRepository { get; }
         public ICategoryRepository CategoryRepository { get; }
+
+        public IInvoiceDetailRepository InvoiceDetailRepository {  get; }
 
         public Task<int> SaveChangeAsync()
         {

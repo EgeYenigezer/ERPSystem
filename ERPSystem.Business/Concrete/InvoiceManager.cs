@@ -49,29 +49,13 @@ namespace ERPSystem.Business.Concrete
         {
             List<InvoiceDTOResponse> invoiceDTOResponses = new();
 
-             if (!(RequestEntity.ProductName.Contains("string")))
-            {
-                var invoice = _mapper.Map<Invoice>(RequestEntity);
-
-                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.ProductName == invoice.ProductName,"Company");
-
-                
-
-                foreach (var item in dbInvoices)
-                {
-                    invoiceDTOResponses.Add(_mapper.Map<InvoiceDTOResponse>(item));
-
-                }
-
-                
-
-            }
+            
              if (RequestEntity.CompanyId!=0)
             {
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
 
-                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.Company.Id == RequestEntity.CompanyId, "Company");
+                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.Company.Id == RequestEntity.CompanyId, "Company","InvoiceDetails");
 
                 
 
@@ -88,7 +72,7 @@ namespace ERPSystem.Business.Concrete
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
 
-                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.SupplierName == invoice.SupplierName, "Company");
+                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.SupplierName == invoice.SupplierName, "Company", "InvoiceDetails");
 
                
 
@@ -103,7 +87,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x=>true, "Company");
+                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x=>true, "Company", "InvoiceDetails");
 
                 
 
@@ -126,7 +110,7 @@ namespace ERPSystem.Business.Concrete
             DateTime endDate = Convert.ToDateTime(dates[1]);
             endDate = endDate.AddDays(1).AddSeconds(-1);
             
-            var invoices = await _uow.InvoiceRepository.GetAllAsync(x=>x.IsActive==true && x.InvoiceDate<= endDate && x.InvoiceDate >= startDate , "Company");
+            var invoices = await _uow.InvoiceRepository.GetAllAsync(x=>x.IsActive==true && x.InvoiceDate<= endDate && x.InvoiceDate >= startDate , "Company", "InvoiceDetails");
 
             List<InvoiceDTOResponse> invoiceDTOResponseList = new();
             foreach (var invoice in invoices)
@@ -142,7 +126,7 @@ namespace ERPSystem.Business.Concrete
         {
             var invoice = _mapper.Map<Invoice>(RequestEntity);
 
-            var dbInvoice = await _uow.InvoiceRepository.GetAsync(x=>x.Id==invoice.Id, "Company");
+            var dbInvoice = await _uow.InvoiceRepository.GetAsync(x=>x.Id==invoice.Id, "Company", "InvoiceDetails");
 
             InvoiceDTOResponse invoiceDTOResponse = _mapper.Map<InvoiceDTOResponse>(dbInvoice);
 

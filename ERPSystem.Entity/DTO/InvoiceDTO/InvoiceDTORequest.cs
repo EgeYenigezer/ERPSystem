@@ -1,4 +1,5 @@
 ﻿using ERPSystem.Entity.Base;
+using ERPSystem.Entity.DTO.InvoiceDetailDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,12 @@ namespace ERPSystem.Entity.DTO.InvoiceDTO
         public Int64 Id { get; set; }
         public Int64 CompanyId { get; set; }
         public DateTime? InvoiceDate { get; set; } = null;
-        public decimal Price { get; set; }
+        public int InvoiceNo { get; set; }
         public string SupplierName { get; set; }
         public string SupplierPhone { get; set; }
         public string SupplierAddress { get; set; }
         public string SupplierMail { get; set; }
         public string CompanyName { get; set; }
-        public string ProductName { get; set; }
-        public decimal Quantity { get; set; }
+        public List<InvoiceDetailDTORequest> InvoiceDetails { get; set; }
     }
 }
