@@ -48,9 +48,18 @@ namespace ERPSystem.Business.Concrete
         public async Task<List<InvoiceDTOResponse>> GetAllAsync(InvoiceDTORequest RequestEntity)
         {
             List<InvoiceDTOResponse> invoiceDTOResponses = new();
+            if (RequestEntity.Id != 0)
+            {
+                var invoice = _mapper.Map<Invoice>(RequestEntity);
+                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x => x.Id == RequestEntity.Id, "Company", "InvoiceDetails");
+                foreach (var item in dbInvoices)
+                {
+                    invoiceDTOResponses.Add(_mapper.Map<InvoiceDTOResponse>(item));
 
+                }
+            }
             
-             if (RequestEntity.CompanyId!=0)
+             else if (RequestEntity.CompanyId!=0)
             {
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);
@@ -67,7 +76,7 @@ namespace ERPSystem.Business.Concrete
 
                 
             }
-             if (!(RequestEntity.SupplierName.Contains("string")))
+             else if (!(RequestEntity.SupplierName.Contains("string")))
             {
 
                 var invoice = _mapper.Map<Invoice>(RequestEntity);

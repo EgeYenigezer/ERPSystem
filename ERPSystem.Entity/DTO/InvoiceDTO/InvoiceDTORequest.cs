@@ -19,6 +19,6 @@ namespace ERPSystem.Entity.DTO.InvoiceDTO
         public string SupplierAddress { get; set; }
         public string SupplierMail { get; set; }
         public string CompanyName { get; set; }
-        public List<InvoiceDetailDTORequest> InvoiceDetails { get; set; }
+        public List<InvoiceDetailDTORequest> InvoiceDetails { get; set; } = null;
     }
 }

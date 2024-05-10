@@ -28,7 +28,7 @@ namespace ERPSystem.Business.DTOMapper.InvoiceMapper
             }).
             ForMember(dest => dest.InvoiceDetails, opt =>
             {
-                opt.MapFrom(src => src.InvoiceDetails);//*****
+                opt.MapFrom(src => src.InvoiceDetails);//***
             }).ReverseMap();
         }
     }
