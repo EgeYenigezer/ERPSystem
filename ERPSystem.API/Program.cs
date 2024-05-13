@@ -5,6 +5,9 @@ using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.DataAccess.Concrete.Context;
 using ERPSystem.DataAccess.Concrete.DataManagement;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<ERPContext>();
+builder.Services.AddDbContext<ERPContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("ErpDB"));
+});
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
 builder.Services.AddScoped<ICompanyService,CompanyManager>();
@@ -36,6 +42,8 @@ builder.Services.AddScoped<IUserService,UserManager>();
 builder.Services.AddScoped<IUserRoleService,UserRoleManager>();
 
 builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
 
 
 var app = builder.Build();
@@ -51,7 +59,9 @@ app.UseHttpsRedirection();
 app.UseGlobalExceptionMiddleware();
 app.UseCors(options => { options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

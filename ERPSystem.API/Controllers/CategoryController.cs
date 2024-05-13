@@ -6,11 +6,13 @@ using ERPSystem.Entity.DTO.CompanyDTO;
 using ERPSystem.Entity.DTO.DepartmentDTO;
 using ERPSystem.Entity.Entities;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ERPSystem.API.Controllers
 {
+    [Authorize("Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
