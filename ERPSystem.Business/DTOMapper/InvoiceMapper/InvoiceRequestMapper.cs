@@ -13,8 +13,10 @@ namespace ERPSystem.Business.DTOMapper.InvoiceMapper
     {
         public InvoiceRequestMapper()
         {
-            CreateMap<Invoice,InvoiceDTORequest>();
-            CreateMap<InvoiceDTORequest, Invoice>();
+            CreateMap<InvoiceDTORequest, Invoice>().ForMember(dest => dest.InvoiceDetails, opt =>
+            {
+                opt.MapFrom(src => src.InvoiceDetails);
+            });
 
         }
     }

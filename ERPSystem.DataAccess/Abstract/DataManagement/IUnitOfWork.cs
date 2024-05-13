@@ -11,6 +11,7 @@ namespace ERPSystem.DataAccess.Abstract.DataManagement
         ICompanyRepository CompanyRepository { get; }
         IDepartmentRepository DepartmentRepository { get; }
         IInvoiceRepository InvoiceRepository { get; }
+        IInvoiceDetailRepository InvoiceDetailRepository { get; }
         IOfferRepository OfferRepository { get; }
         IProcessTypeRepository ProcessTypeRepository { get; }
         IProductRepository ProductRepository { get; }

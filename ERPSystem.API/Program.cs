@@ -22,6 +22,7 @@ builder.Services.AddScoped<ICompanyService,CompanyManager>();
 builder.Services.AddScoped<IDepartmentService,DepartmentManager>();
 builder.Services.AddScoped<ICategoryService,CategoryManager>();
 builder.Services.AddScoped<IInvoiceService,InvoiceManager>();
+builder.Services.AddScoped<IInvoiceDetailService,InvoiceDetailManager>();
 builder.Services.AddScoped<IOfferService,OfferManager>();
 builder.Services.AddScoped<IProcessTypeService,ProcessTypeManager>();
 builder.Services.AddScoped<IProductService,ProductManager>();
