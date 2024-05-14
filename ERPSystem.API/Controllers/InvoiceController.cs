@@ -31,9 +31,9 @@ namespace ERPSystem.API.Controllers
         }
 
         [HttpPost("/InvoicesByDate")]
-        public async Task<IActionResult> GetAllAsync(string date)
+        public async Task<IActionResult> GetAllAsyncByDate(string datefilter)
         {
-            var invoices = await _invoiceService.GetAllAsyncByDate(date);
+            var invoices = await _invoiceService.GetAllAsyncByDate(datefilter);
 
             return Ok(ApiResponse<List<InvoiceDTOResponse>>.SuccesWithData(invoices));
         }

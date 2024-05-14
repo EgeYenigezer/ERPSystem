@@ -2,6 +2,7 @@
 using ERPSystem.Business.Abstract;
 using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.CompanyDTO;
+using ERPSystem.Entity.DTO.UserDTO;
 using ERPSystem.Entity.Entities;
 using System;
 using System.Collections.Generic;
@@ -40,15 +41,30 @@ namespace ERPSystem.Business.Concrete
 
         public async Task<List<CompanyDTOResponse>> GetAllAsync(CompanyDTORequest RequestEntity)
         {
-            var company = _mapper.Map<Company>(RequestEntity); /*Filtreleme yapmak istersek kullanbiliriz */
-
-            var dbCompanies = await _uow.CompanyRepository.GetAllAsync(x=> true);
-
             List<CompanyDTOResponse> companyDTOResponses = new();
 
-            foreach (var dbCompany in dbCompanies)
+            if (RequestEntity.Id != 0)
             {
-                companyDTOResponses.Add(_mapper.Map<CompanyDTOResponse>(dbCompany));
+                var company = _mapper.Map<Company>(RequestEntity); /*Filtreleme yapmak istersek kullanbiliriz */
+
+                var dbCompanies = await _uow.CompanyRepository.GetAllAsync(x => x.Id == RequestEntity.Id);
+
+                foreach (var dbCompany in dbCompanies)
+                {
+                    companyDTOResponses.Add(_mapper.Map<CompanyDTOResponse>(dbCompany));
+                }
+
+            }
+            else
+            {
+                var company = _mapper.Map<Company>(RequestEntity); /*Filtreleme yapmak istersek kullanbiliriz */
+
+                var dbCompanies = await _uow.CompanyRepository.GetAllAsync(x => true);
+
+                foreach (var dbCompany in dbCompanies)
+                {
+                    companyDTOResponses.Add(_mapper.Map<CompanyDTOResponse>(dbCompany));
+                }
             }
             return companyDTOResponses;
 

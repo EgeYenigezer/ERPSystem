@@ -18,5 +18,6 @@ namespace ERPSystem.Entity.DTO.UserDTO
         public string Image { get; set; }
         public string CompanyName { get; set; }
         public Int64 DepartmentId { get; set; }
+        public Int64 CompanyId { get; set; }
     }
 }

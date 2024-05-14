@@ -80,7 +80,17 @@ namespace ERPSystem.Business.Concrete
 
 
             }
-            
+            else if (RequestEntity.CompanyId != 0)
+            {
+                var filterUser = _mapper.Map<User>(RequestEntity);
+
+                var departmentFilterUsers = await _uow.UserRepository.GetAllAsync(x => x.Department.CompanyId == RequestEntity.CompanyId, "Department.Company", "UserRoles.Role");
+
+                foreach (var user in departmentFilterUsers)
+                {
+                    userDTOResponses.Add(_mapper.Map<UserDTOResponse>(user));
+                }
+            }
 
             else
             {
