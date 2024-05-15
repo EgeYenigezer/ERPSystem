@@ -96,10 +96,7 @@ namespace ERPSystem.Business.Concrete
             }
             else
             {
-                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x=>true && x.IsActive == false, "Company", "InvoiceDetails");
-
-                
-
+                var dbInvoices = await _uow.InvoiceRepository.GetAllAsync(x=>true, "Company", "InvoiceDetails");
                 foreach (var item in dbInvoices)
                 {
                     invoiceDTOResponses.Add(_mapper.Map<InvoiceDTOResponse>(item));

@@ -35,7 +35,7 @@ namespace ERPSystem.DataAccess.Concrete.Context
         public virtual DbSet<UserRole> UserRole { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-R04PVQ3; Initial Catalog=ErpDB; Integrated Security=true; TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=AhlTek-EmreKaya; Initial Catalog=ErpDB; Integrated Security=true; TrustServerCertificate=True");
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
