@@ -1,4 +1,5 @@
-﻿using ERPSystem.Business.Abstract;
+﻿using ERPSystem.API.Identity;
+using ERPSystem.Business.Abstract;
 using ERPSystem.Business.Utilities.Attributes;
 using ERPSystem.Business.Utilities.Validation.CategoryValidator;
 using ERPSystem.Business.Utilities.Validation.CompanyValidator;
@@ -7,6 +8,7 @@ using ERPSystem.Entity.DTO.CategoryDTO;
 using ERPSystem.Entity.DTO.CompanyDTO;
 using ERPSystem.Entity.Entities;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,7 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin,Müdür")]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
