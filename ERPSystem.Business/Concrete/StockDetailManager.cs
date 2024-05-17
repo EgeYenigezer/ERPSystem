@@ -71,7 +71,8 @@ namespace ERPSystem.Business.Concrete
                 {
                     stockDetailDTOResponses.Add(_mapper.Map<StockDetailDTOResponse>(dbStockDetail));
                 }
-                return stockDetailDTOResponses;
+                var stockDetailDTOResponseList = stockDetailDTOResponses.OrderByDescending(x=>x.Id).ToList();
+                return stockDetailDTOResponseList;
             }
             else if (RequestEntity.ProcessTypeId!=0)
             {
@@ -84,7 +85,8 @@ namespace ERPSystem.Business.Concrete
                 {
                     stockDetailDTOResponses.Add(_mapper.Map<StockDetailDTOResponse>(dbStockDetail));
                 }
-                return stockDetailDTOResponses;
+                var stockDetailDTOResponseList = stockDetailDTOResponses.OrderByDescending(x => x.Id).ToList();
+                return stockDetailDTOResponseList;
             }
             else if(RequestEntity.DelivererId !=0)
             {
@@ -97,7 +99,8 @@ namespace ERPSystem.Business.Concrete
                 {
                     stockDetailDTOResponses.Add(_mapper.Map<StockDetailDTOResponse>(dbStockDetail));
                 }
-                return stockDetailDTOResponses;
+                var stockDetailDTOResponseList = stockDetailDTOResponses.OrderByDescending(x => x.Id).ToList();
+                return stockDetailDTOResponseList;
             }
             else
             {
@@ -110,7 +113,8 @@ namespace ERPSystem.Business.Concrete
                 {
                     stockDetailDTOResponses.Add(_mapper.Map<StockDetailDTOResponse>(dbStockDetail));
                 }
-                return stockDetailDTOResponses;
+                var stockDetailDTOResponseList = stockDetailDTOResponses.OrderByDescending(x => x.Id).ToList();
+                return stockDetailDTOResponseList;
             }
         }
 
