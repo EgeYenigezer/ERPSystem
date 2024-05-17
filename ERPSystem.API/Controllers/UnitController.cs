@@ -6,6 +6,7 @@ using ERPSystem.Entity.DTO.StockDetailDTO;
 using ERPSystem.Entity.DTO.UnitDTO;
 using ERPSystem.Entity.Entities;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Müdür,Çalışan")]
     public class UnitController : ControllerBase
     {
         private readonly IUnitService _unitService;

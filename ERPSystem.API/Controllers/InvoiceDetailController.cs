@@ -4,6 +4,7 @@ using ERPSystem.Business.Utilities.Validation.InvoiceValidator;
 using ERPSystem.Entity.DTO.InvoiceDetailDTO;
 using ERPSystem.Entity.DTO.InvoiceDTO;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Müdür")]
     public class InvoiceDetailController : ControllerBase
     {
         private readonly IInvoiceDetailService _invoiceDetailService;

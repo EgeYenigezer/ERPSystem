@@ -5,6 +5,7 @@ using ERPSystem.Business.Utilities.Validation.ProductValidator;
 using ERPSystem.Entity.DTO.ProductDTO;
 using ERPSystem.Entity.Entities;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

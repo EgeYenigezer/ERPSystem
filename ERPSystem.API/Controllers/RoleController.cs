@@ -5,6 +5,7 @@ using ERPSystem.Entity.DTO.RequestDTO;
 using ERPSystem.Entity.DTO.RoleDTO;
 using ERPSystem.Entity.Entities;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Müdür,Çalışan")]
     public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;

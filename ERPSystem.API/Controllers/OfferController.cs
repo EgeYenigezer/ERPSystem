@@ -4,6 +4,7 @@ using ERPSystem.Business.Utilities.Validation.InvoiceValidator;
 using ERPSystem.Business.Utilities.Validation.OfferValidator;
 using ERPSystem.Entity.DTO.OfferDTO;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Müdür")]
     public class OfferController : ControllerBase
     {
         private readonly IOfferService _offerService;
