@@ -37,8 +37,8 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RequestDTOResponse>.SuccesWithData(request));
         }
 
-        [HttpPost("/AddRequest")]
         [ValidationFilter(typeof(RequestValidation))]
+        [HttpPost("/AddRequest")]
         public async Task<IActionResult> AddAsync(RequestDTORequest requestDTORequest)
         {
             var addedRequest = await _requestService.AddAsync(requestDTORequest);

@@ -10,12 +10,12 @@ namespace ERPSystem.Entity.DTO.InvoiceDetailDTO
 {
     public class InvoiceDetailDTORequest:BaseRequestDTO
     {
-        public Int64 Id { get; set; }
-        public Int64 InvoiceId { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal UnitPrice { get; set; }
-        public decimal Sum { get; set; }
+        public Int64? Id { get; set; }
+        public Int64? InvoiceId { get; set; }
+        public string? ProductName { get; set; }
+        public string? ProductDescription { get; set; }
+        public decimal? Quantity { get; set; }
+        public decimal? UnitPrice { get; set; }
+        public decimal? Sum { get; set; }
     }
 }

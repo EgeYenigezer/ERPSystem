@@ -9,7 +9,7 @@ namespace ERPSystem.Entity.DTO.RoleDTO
 {
     public class RoleDTORequest:BaseRequestDTO
     {
-        public Int64 Id { get; set; }
-        public string Name { get; set; }
+        public Int64? Id { get; set; }
+        public string? Name { get; set; }
     }
 }

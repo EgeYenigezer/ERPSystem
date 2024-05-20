@@ -9,7 +9,7 @@ namespace ERPSystem.Entity.DTO.ProcessTypeDTO
 {
     public class ProcessTypeDTORequest:BaseRequestDTO
     {
-        public Int64 Id { get; set; }
-        public string Name { get; set; }
+        public Int64? Id { get; set; }
+        public string? Name { get; set; }
     }
 }

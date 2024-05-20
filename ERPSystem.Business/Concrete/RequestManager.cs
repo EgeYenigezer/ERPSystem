@@ -25,7 +25,7 @@ namespace ERPSystem.Business.Concrete
             _uow = uow;
         }
 
-        [ValidationFilter(typeof(RequestValidation))]
+        
         public async Task<RequestDTOResponse> AddAsync(RequestDTORequest RequestEntity)
         {
             if(RequestEntity.ApproverId == 0)

@@ -13,6 +13,8 @@ namespace ERPSystem.Business.Utilities.Validation.StockDetailValidator
         public StockDetailValidation()
         {
             RuleFor(x=>x.ProcessTypeId).NotEmpty().WithMessage("Stok detayı işlem tipi boş olamaz!");
+            RuleFor(x => x.Quantity).NotEmpty().WithMessage("Miktar boş olamaz!");
+            RuleFor(x => x.Quantity).NotNull().WithMessage("Miktar boş olamaz!");
             RuleFor(x => x.StockId).NotEmpty().WithMessage("Stok detayı stok bilgisi boş olamaz!");
         }
     }
