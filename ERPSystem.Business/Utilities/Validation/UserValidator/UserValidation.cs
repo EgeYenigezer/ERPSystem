@@ -14,8 +14,8 @@ namespace ERPSystem.Business.Utilities.Validation.UserValidator
         {
             RuleFor(x=>x.Name).NotEmpty().WithMessage("Kullanıcı ismi boş olamaz!");
             RuleFor(x=>x.Name).MaximumLength(50).MinimumLength(2).WithMessage("İsim 2 karakterden küçük , 50 karakterden büyük olamaz!");
-            RuleFor(x => x.Email).NotEmpty().WithMessage("Kullanıcı e-postası boş olamaz!");
-            RuleFor(x => x.Email).Matches("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$").WithMessage("E-Posta Formatı Doğru Değil!");
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Kullanıcı epostası boş olamaz!");
+            RuleFor(x => x.Email).Matches("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$").WithMessage("EPosta Formatı Doğru Değil!");
             RuleFor(x => x.Password).NotEmpty().WithMessage("Kullanıcı şifresi boş olamaz!");
             RuleFor(x=>x.Phone).NotEmpty().WithMessage("Kullanıcı telefon numarası boş olamaz!");
             RuleFor(x => x.Phone).MinimumLength(11).MaximumLength(11).WithMessage("Telefon numarası 11 karakterden büyük veya küçük olamaz!");

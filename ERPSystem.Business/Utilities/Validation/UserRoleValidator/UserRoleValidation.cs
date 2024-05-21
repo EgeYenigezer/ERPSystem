@@ -12,8 +12,8 @@ namespace ERPSystem.Business.Utilities.Validation.UserRoleValidator
     {
         public UserRoleValidation()
         {
-            RuleFor(x=>x.UserId).NotEmpty().WithMessage("Kullanıcı-Rol için kullanıcı bilgisi boş olamaz!");
-            RuleFor(x=>x.RoleId).NotEmpty().WithMessage("Kullanıcı-Rol için rol bilgisi boş olamaz!");
+            RuleFor(x=>x.UserId).NotEmpty().WithMessage("Kullanıcı/Rol için kullanıcı bilgisi boş olamaz!");
+            RuleFor(x=>x.RoleId).NotEmpty().WithMessage("Kullanıcı/Rol için rol bilgisi boş olamaz!");
         }
     }
 }
