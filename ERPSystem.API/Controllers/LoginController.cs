@@ -4,6 +4,7 @@ using ERPSystem.DataAccess.Abstract.DataManagement;
 using ERPSystem.Entity.DTO.LoginDTO;
 using ERPSystem.Entity.DTO.UserDTO;
 using ERPSystem.Entity.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ using System.Text;
 
 namespace ERPSystem.API.Controllers
 {
+    [AllowAnonymous()]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase

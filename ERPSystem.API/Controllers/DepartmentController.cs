@@ -14,7 +14,6 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Müdür,Çalışan")]
     public class DepartmentController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
@@ -23,7 +22,7 @@ namespace ERPSystem.API.Controllers
         {
             _departmentService = departmentService;
         }
-
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [HttpPost("/Departments")]
         public async Task<IActionResult> GetAllAsync(DepartmentDTORequest departmentDTORequest)
         {
@@ -31,6 +30,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<List<DepartmentDTOResponse>>.SuccesWithData(departments));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/Department")]
         public async Task<IActionResult> GetAsync(DepartmentDTORequest departmentDTORequest)
         {
@@ -38,7 +38,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<DepartmentDTOResponse>.SuccesWithData(department));
         }
 
-
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/AddDepartment")]
         [ValidationFilter(typeof(DepartmentValidation))]
         public async Task<IActionResult> AddAsync(DepartmentDTORequest departmentDTORequest)
@@ -47,6 +47,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<DepartmentDTOResponse>.SuccesWithData(department));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/UpdateDepartment")]
         [ValidationFilter(typeof(DepartmentValidation))]
         public async Task<IActionResult> UpdateAsync(DepartmentDTORequest departmentDTORequest)
@@ -55,6 +56,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<DepartmentDTOResponse>.SuccesWithOutData());
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/DeleteDepartment")]
         public async Task<IActionResult> DeleteAsync(DepartmentDTORequest departmentDTORequest)
         {
