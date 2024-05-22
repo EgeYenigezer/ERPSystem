@@ -32,7 +32,7 @@ namespace ERPSystem.Business.Concrete
             {
                 stock.Quantity += RequestEntity.Quantity;
             }
-            else if (RequestEntity.Quantity != 0 && RequestEntity.ProcessTypeId == 2)
+            else if (RequestEntity.Quantity != 0 && (RequestEntity.ProcessTypeId == 2 || RequestEntity.ProcessTypeId == 4))
             {
                 var stockQuantity = stock.Quantity - RequestEntity.Quantity;
                 if (stockQuantity < 0)

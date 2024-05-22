@@ -1,5 +1,4 @@
-﻿using ERPSystem.API.Identity;
-using ERPSystem.Business.Abstract;
+﻿using ERPSystem.Business.Abstract;
 using ERPSystem.Business.Utilities.Attributes;
 using ERPSystem.Business.Utilities.Validation.CategoryValidator;
 using ERPSystem.Business.Utilities.Validation.CompanyValidator;

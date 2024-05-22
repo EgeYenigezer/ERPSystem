@@ -1,5 +1,4 @@
-﻿using ERPSystem.API.Identity;
-using ERPSystem.API.Middleware;
+﻿using ERPSystem.API.Middleware;
 using ERPSystem.Business.Abstract;
 using ERPSystem.Business.Concrete;
 using ERPSystem.DataAccess.Abstract.DataManagement;
