@@ -13,7 +13,6 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Müdür,Çalışan")]
     public class RequestController : ControllerBase
     {
         private readonly IRequestService _requestService;
@@ -22,7 +21,7 @@ namespace ERPSystem.API.Controllers
         {
             _requestService = productService;
         }
-
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [HttpPost("/Requests")]
         public async Task<IActionResult> GetAllAsync(RequestDTORequest requestDTORequest)
         {
@@ -30,6 +29,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<List<RequestDTOResponse>>.SuccesWithData(requests));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/Request")]
         public async Task<IActionResult> GetAsync(RequestDTORequest requestDTORequest)
         {
@@ -37,6 +37,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RequestDTOResponse>.SuccesWithData(request));
         }
 
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [ValidationFilter(typeof(RequestValidation))]
         [HttpPost("/AddRequest")]
         public async Task<IActionResult> AddAsync(RequestDTORequest requestDTORequest)
@@ -45,6 +46,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RequestDTOResponse>.SuccesWithData(addedRequest));
         }
 
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [HttpPost("/UpdateRequest")]
         [ValidationFilter(typeof(RequestValidation))]
         public async Task<IActionResult> UpdateAsync(RequestDTORequest requestDTORequest)
@@ -53,6 +55,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RequestDTOResponse>.SuccesWithOutData());
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/DeleteRequest")]
         public async Task<IActionResult> DeleteAsync(RequestDTORequest requestDTORequest)
         {

@@ -21,7 +21,7 @@ namespace ERPSystem.API.Controllers
         {
             _productService = productService;
         }
-
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [HttpPost("/Products")]
         public async Task<IActionResult> GetAllAsync(ProductDTORequest productDTORequest)
         {
@@ -29,6 +29,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<List<ProductDTOResponse>>.SuccesWithData(products));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/Product")]
         public async Task<IActionResult> GetAsync(ProductDTORequest productDTORequest)
         {
@@ -36,6 +37,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<ProductDTOResponse>.SuccesWithData(product));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/AddProduct")]
         [ValidationFilter(typeof(ProductValidation))]
         public async Task<IActionResult> AddAsync(ProductDTORequest productDTORequest)
@@ -44,6 +46,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<ProductDTOResponse>.SuccesWithData(addedProduct));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/UpdateProduct")]
         [ValidationFilter(typeof(ProductValidation))]
         public async Task<IActionResult> UpdateAsync(ProductDTORequest productDTORequest)
@@ -52,6 +55,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<ProductDTOResponse>.SuccesWithOutData());
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/DeleteProduct")]
         public async Task<IActionResult> DeleteAsync(ProductDTORequest productDTORequest)
         {

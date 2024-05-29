@@ -13,7 +13,6 @@ namespace ERPSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Müdür,Çalışan")]
     public class RoleController : ControllerBase
     {
         private readonly IRoleService _roleService;
@@ -22,7 +21,7 @@ namespace ERPSystem.API.Controllers
         {
             _roleService = roleService;
         }
-
+        [Authorize(Roles = "Admin,Müdür,Çalışan")]
         [HttpPost("/Roles")]
         public async Task<IActionResult> GetAllAsync(RoleDTORequest roleDTORequest)
         {
@@ -30,6 +29,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<List<RoleDTOResponse>>.SuccesWithData(roles));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/Role")]
         public async Task<IActionResult> GetAsync(RoleDTORequest roleDTORequest)
         {
@@ -37,6 +37,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RoleDTOResponse>.SuccesWithData(role));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/AddRole")]
         [ValidationFilter(typeof(RoleValidation))]
         public async Task<IActionResult> AddAsync(RoleDTORequest roleDTORequest)
@@ -45,6 +46,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RoleDTOResponse>.SuccesWithData(addedRole));
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/UpdateRole")]
         [ValidationFilter(typeof(RoleValidation))]
         public async Task<IActionResult> UpdateAsync(RoleDTORequest roleDTORequest)
@@ -53,6 +55,7 @@ namespace ERPSystem.API.Controllers
             return Ok(ApiResponse<RoleDTOResponse>.SuccesWithOutData());
         }
 
+        [Authorize(Roles = "Admin,Müdür")]
         [HttpPost("/DeleteRole")]
         public async Task<IActionResult> DeleteAsync(RoleDTORequest roleDTORequest)
         {
